@@ -1,0 +1,13 @@
+@(map:Map[Int,Map[Int,Array[Post]]])
+
+@page("Archive")("") {
+	@for(k <- map.keys.toList.sortBy(-_)) {
+	<h2>@k</h2>
+		@for(k2 <- map(k).keys.toList.sortBy(-_)) {
+		<h3>@{new LocalDate(2000,k2,1).toString("MMM")}</h3>
+			@for(post <- map(k)(k2)){
+				<li><span>@post.date.toString("yyyy-MMM-dd")</span> &raquo; <a href="/post/@post.name">@post.title</a></li>
+			}
+		}
+	}
+}

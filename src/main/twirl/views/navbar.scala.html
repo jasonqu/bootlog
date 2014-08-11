@@ -1,0 +1,18 @@
+@import play.api.Play.current
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-narrow">
+      <a class="brand" href="/">@Messages("site.title")</a>
+      <ul class="nav">
+        <li><a href="/archive.html">Archive</a></li>
+        <li><a href="/categories.html">Categories</a></li>
+        <li><a href="/pages.html">Pages</a></li>
+        <li><a href="/tags.html">Tags</a></li>
+        <!-- TODO navbar //(pages : Seq[(String, String)])
+          @{
+            //pages.map{<li><a href="@_._1">@_._2</a></li>}
+          }-->
+      </ul>
+    </div>
+  </div>
+</div>

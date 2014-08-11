@@ -1,0 +1,26 @@
+@(item: models.Post)
+
+@main(item.title) {
+<div class="page-header">
+  <h1>@item.title <small>@item.tagline</small></h1>
+</div>
+
+<div class="row-fluid post-full">
+  <div class="span12">
+    <div class="date">
+      <span>@item.date.toString("MM/dd/yyyy EE")</span>
+    </div>
+    <div class="content">
+      @Html(item.html)
+    </div>
+    
+  <!-- todo categories 参考post.html -->
+  <!-- todo tags 参考post.html -->
+    <hr>
+    <!-- pagination previous next 参考post.html -->
+    <hr>
+    <!-- comments -->
+  </div>
+</div>
+
+}

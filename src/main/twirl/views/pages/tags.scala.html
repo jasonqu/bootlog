@@ -1,0 +1,18 @@
+@(map:scala.collection.mutable.HashMap[String,scala.collection.mutable.Set[models.Post]])
+
+@page("Tags")("") {
+<ul class="tag_box inline">
+@for(k <- map.keys) {
+  <li><a href="/categories.html#@k-ref">@k <span>@map(k).size</span></a></li>
+}
+</ul>
+
+@for((key, value) <- map) {
+  <h2 id="@key-ref">@key</h2>
+  <ul>
+    @for(p <- value) {
+      <li><a href="/post/@p.name">@p.title</a></li>
+    }
+  </ul>
+}
+}

@@ -1,0 +1,55 @@
+@(content: String)(posts: Array[models.Post])
+
+@page("Hello World!")("Supporting tagline") {
+
+@{
+import util.markdown.PegDown._
+Html(processMdContent("""
+Read [TODO Quick Start]()
+
+Complete usage and documentation available at: [play-jekyll-bootstrap](https://github.com/jasonqu/play-jekyll-bootstrap)
+
+## Update configuration
+
+In `conf/blog.conf` remember to specify your own data:
+    
+    site.title : My Blog =)
+    author : {
+      name : Name Lastname
+      email : "blah@email.test"
+      github : username
+      twitter : username
+    }
+
+The theme should reference these variables whenever needed.
+
+## To-Do
+
+A lot of job need to be done, including:
+
+1. make play be able to compile md template smoothly so that the index page
+2. make it easy to [generate static site](https://github.com/sbt/sbt-site) and [git pushing](http://github.com/sbt/sbt-ghpages)
+3. add extra features like play-doc support
+4. add examples
+
+Any suggestion or contribution is welcome.
+
+## Sample Posts
+
+This blog contains sample posts which help stage pages and blog data.
+When you don't need the samples anymore just delete the `_posts/core-samples` folder.
+
+    $ rm -rf _posts/core-samples
+
+Here's a sample "posts list".
+"""))
+}
+
+<ul class='posts'>
+  @for(p <- posts) {
+    <li><span>@p.date.toString("MM/dd/yyyy")</span> &raquo 
+    <a href='/post/@p.name'>@p.name</a></li>
+  }
+</ul>
+}
+

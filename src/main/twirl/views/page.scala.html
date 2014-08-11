@@ -1,0 +1,12 @@
+@(pageTitle: String)(pageTagline: String)(content: Html)
+
+@main(pageTitle) {
+<div class="page-header">
+  <h1>@pageTitle <small>@pageTagline</small></h1>
+</div>
+
+<div class="row-fluid">
+  <div class="span12">@content</div>
+</div>
+
+}
