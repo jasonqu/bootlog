@@ -1,14 +1,12 @@
 @(pagetitle: String)(content: Html)
 
-@import play.api.Play.current
-
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>@pagetitle</title>
-    <meta name="description" content="@Messages("description")">
-    <meta name="author" content="@Messages("author.name")">
+    <meta name="description" content="@message("description")">
+    <meta name="author" content="@message("author.name")">
     <!-- TODO description author -->
     
     <!-- Enable responsive viewport -->
@@ -20,11 +18,11 @@
     <![endif]-->
     
     <!-- Le styles -->
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.2.2.2.min.css")">
-    <link rel="stylesheet" media="all" type="text/css" href="@routes.Assets.at("stylesheets/style.css?body=1")">
-    <link rel="stylesheet" media="all" type="text/css" href="@routes.Assets.at("stylesheets/prettify.css")">
-    <link rel="stylesheet" media="all" type="text/css" href="@routes.Assets.at("stylesheets/desert.css")">
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <link rel="stylesheet" media="screen" href="@path("stylesheets/bootstrap.2.2.2.min.css")">
+    <link rel="stylesheet" media="all" type="text/css" href="@path("stylesheets/style.css?body=1")">
+    <link rel="stylesheet" media="all" type="text/css" href="@path("stylesheets/prettify.css")">
+    <link rel="stylesheet" media="all" type="text/css" href="@path("stylesheets/desert.css")">
+    <link rel="shortcut icon" type="image/png" href="@path("images/favicon.png")">
 
     <!-- Le fav and touch icons -->
   <!-- Update these with your own images
@@ -48,7 +46,7 @@
       </div>
       <hr>
       <footer>
-        <p>&copy; 2014 @Messages("author.name")
+        <p>&copy; 2014 @message("author.name")
           with help from <a href="https://github.com/jasonqu/play-jekyll-bootstrap" target="_blank">play-jekyll-bootstrap</a> and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
         </p>
       </footer>
@@ -58,10 +56,10 @@
     <!-- todo google prettify refactor -->
     
     <!-- 
-    <script src="@routes.Assets.at("javascripts/prettify.js")" type="text/javascript"></script>
+    <script src="@path("javascripts/prettify.js")" type="text/javascript"></script>
      -->
-    <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/run_prettify.js?lang=scala&skin=desert")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/lang-scala.js")" type="text/javascript"></script>
+    <script src="@path("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+    <script src="@path("javascripts/run_prettify.js?lang=scala&skin=desert")" type="text/javascript"></script>
+    <script src="@path("javascripts/lang-scala.js")" type="text/javascript"></script>
   </body>
 </html>

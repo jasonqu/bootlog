@@ -1,15 +1,14 @@
 @(posts: Array[models.Post])
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-@import play.api.Play.current
- <title>@Messages("site.title")</title>
- <link href="@Messages("production_url")/atom.xml" rel="self"/>
- <link href="@Messages("production_url")"/>
+ <title>@message("site.title")</title>
+ <link href="@message("production_url")/atom.xml" rel="self"/>
+ <link href="@message("production_url")"/>
  <updated>{{ site.time | date_to_xmlschema }}</updated>
- <id>@Messages("production_url")</id>
+ <id>@message("production_url")</id>
  <author>
-   <name>@Messages("author.name")</name>
-   <email>@Messages("author.email")</email>
+   <name>@message("author.name")</name>
+   <email>@message("author.email")</email>
  </author>
 
  @for(post <- posts){
@@ -17,7 +16,7 @@
    <title>@post.title</title>
    <link href="/post/@post.name"/>
    <updated>@post.date</updated>
-   <id>@Messages("production_url")/post/@post.name</id>
+   <id>@message("production_url")/post/@post.name</id>
    <content type="html">@post.html</content>
  </entry>
  }
