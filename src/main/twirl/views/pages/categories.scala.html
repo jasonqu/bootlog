@@ -3,7 +3,7 @@
 @page("Categories")("") {
 <ul class="tag_box inline">
 @for(k <- map.keys) {
-  <li><a href="/categories.html#@k-ref">@k <span>@map(k).length</span></a></li>
+  <li><a href="categories.html#@k-ref">@k <span>@map(k).length</span></a></li>
 }
 </ul>
 
@@ -11,7 +11,7 @@
   <h2 id="@key-ref">@key</h2>
   <ul>
     @for(p <- value) {
-      <li><a href="/post/@p.name">@p.title</a></li>
+      <li><a href="post/@p.name">@p.title</a></li>
     }
   </ul>
 }

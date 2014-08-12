@@ -3,14 +3,10 @@
     <div class="container-narrow">
       <a class="brand" href="/">@message("site.title")</a>
       <ul class="nav">
-        <li><a href="@path("archive.html")">Archive</a></li>
-        <li><a href="@path("categories.html")">Categories</a></li>
-        <li><a href="@path("pages.html")">Pages</a></li>
-        <li><a href="@path("tags.html")">Tags</a></li>
-        <!-- TODO navbar //(pages : Seq[(String, String)])
-          @{
-            //pages.map{<li><a href="@_._1">@_._2</a></li>}
-          }-->
+        @for(p <- ("archive.html", "Archive") :: ("categories.html", "Categories")
+          :: ("pages.html", "Pages") :: ("tags.html", "Tags") :: Nil) {
+          <li><a href="@path(p._1)">@p._2</a></li>
+        }
       </ul>
     </div>
   </div>

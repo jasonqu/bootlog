@@ -48,7 +48,7 @@ Here's a sample "posts list".
 <ul class='posts'>
   @for(p <- posts) {
     <li><span>@p.date.toString("MM/dd/yyyy")</span> &raquo 
-    <a href='/post/@p.name'>@p.name</a></li>
+    <a href='@path("post/" + p.name)'>@p.name</a></li>
   }
 </ul>
 }

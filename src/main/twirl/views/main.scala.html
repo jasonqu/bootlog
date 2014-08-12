@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <title>@pagetitle</title>
-    <meta name="description" content="@message("description")">
+    <meta name="description" content="@message("site.description")">
     <meta name="author" content="@message("author.name")">
     <!-- TODO description author -->
     
@@ -32,10 +32,8 @@
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
   -->
   
-    <!-- TODO atom & rss feed 
-    <link href="{{ BASE_PATH }}{{ site.JB.atom_path }}" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
-    <link href="{{ BASE_PATH }}{{ site.JB.rss_path }}" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
-    -->
+    <link href="atom.xml" type="application/atom+xml" rel="alternate" title="bootlog ATOM Feed">
+    <link href="rss.xml" type="application/rss+xml" rel="alternate" title="bootlog RSS Feed">
   </head>
   <body>
     @navbar()
@@ -47,7 +45,7 @@
       <hr>
       <footer>
         <p>&copy; 2014 @message("author.name")
-          with help from <a href="https://github.com/jasonqu/play-jekyll-bootstrap" target="_blank">play-jekyll-bootstrap</a> and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+          with help from <a href="https://github.com/jasonqu/bootlog" target="_blank">bootlog</a> and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
         </p>
       </footer>
     </div>

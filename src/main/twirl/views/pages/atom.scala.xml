@@ -4,7 +4,7 @@
  <title>@message("site.title")</title>
  <link href="@message("production_url")/atom.xml" rel="self"/>
  <link href="@message("production_url")"/>
- <updated>{{ site.time | date_to_xmlschema }}</updated>
+ <updated>@{new DateTime()}</updated>
  <id>@message("production_url")</id>
  <author>
    <name>@message("author.name")</name>
@@ -14,7 +14,7 @@
  @for(post <- posts){
  <entry>
    <title>@post.title</title>
-   <link href="/post/@post.name"/>
+   <link href="post/@post.name"/>
    <updated>@post.date</updated>
    <id>@message("production_url")/post/@post.name</id>
    <content type="html">@post.html</content>

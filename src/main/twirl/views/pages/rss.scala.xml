@@ -6,8 +6,8 @@
         <description>@message("site.title") - @message("author.name")</description>
         <link>@message("production_url")/rss.xml</link>
         <link>@message("production_url")</link>
-        <lastBuildDate>{{ site.time | date_to_xmlschema }}</lastBuildDate>
-        <pubDate>{{ site.time | date_to_xmlschema }}</pubDate>
+        <lastBuildDate>@{new DateTime()}</lastBuildDate>
+        <pubDate>@{new DateTime()}</pubDate>
         <ttl>1800</ttl>
 
  @for(post <- posts){
