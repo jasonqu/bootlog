@@ -21,8 +21,8 @@ object Post {
     these ++ these.filter(_.isDirectory).flatMap(recursiveListFiles)
   }
   
-  def getPosts = {
-    val postFiles = recursiveListFiles(new File("_content/_posts")).filterNot(_.isDirectory)
+  def getPosts(path : String) = {
+    val postFiles = recursiveListFiles(new File(path)).filterNot(_.isDirectory)
     val posts = postFiles.map { file =>
       val (metadata, content) = processMdFile(file)
       

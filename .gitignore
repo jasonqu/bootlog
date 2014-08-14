@@ -17,3 +17,5 @@ dist
 .cache
 .target
 bin
+
+site
