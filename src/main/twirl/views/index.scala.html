@@ -2,54 +2,47 @@
 
 @page("Hello World!")("Supporting tagline") {
 
-@{
-import util.markdown.PegDown._
-Html(processMdContent("""
-Read [TODO Quick Start]()
 
-Complete usage and documentation available at: [play-jekyll-bootstrap](https://github.com/jasonqu/play-jekyll-bootstrap)
 
-## Update configuration
-
-In `conf/blog.conf` remember to specify your own data:
-    
-    site.title : My Blog =)
-    author : {
-      name : Name Lastname
-      email : "blah@email.test"
-      github : username
-      twitter : username
-    }
-
-The theme should reference these variables whenever needed.
-
-## To-Do
-
-A lot of job need to be done, including:
-
-1. make play be able to compile md template smoothly so that the index page
-2. make it easy to [generate static site](https://github.com/sbt/sbt-site) and [git pushing](http://github.com/sbt/sbt-ghpages)
-3. add extra features like play-doc support
-4. add examples
-
-Any suggestion or contribution is welcome.
-
-## Sample Posts
-
-This blog contains sample posts which help stage pages and blog data.
-When you don't need the samples anymore just delete the `_posts/core-samples` folder.
-
-    $ rm -rf _posts/core-samples
-
-Here's a sample "posts list".
-"""))
-}
-
-<ul class='posts'>
-  @for(p <- posts) {
-    <li><span>@p.date.toString("MM/dd/yyyy")</span> &raquo 
-    <a href='@path("post/" + p.name)'>@p.name</a></li>
-  }
-</ul>
+<main>
+  <div class="timeline">
+    <dl>
+      <!--<dt>Apr 2014</dt>-->
+      @for((p, index) <- posts.zipWithIndex) {
+        <dd class="@if(index%2 == 1){pos-left}else{pos-right} clearfix">
+          <div class="circ circ-@if(index%2 == 1){odd}"></div>
+          <div class="time">
+            <span data-toggle="tooltip" data-original-title="@p.date.toString("YYYY-MM-DD")" title="">
+              @p.date.toString("yyyy-MM-dd")
+            </span>
+            <!--<span data-toggle="tooltip" data-original-title="{{date format='YYYY-MM-DD'}} at {{date format='HH:mm'}}" title="">-->
+              <!--{{date timeago=true}}-->
+            <!--</span>-->
+          </div>
+          <div class="events">
+            <div class="pull-left">
+              <!--<img class="events-object img-rounded" src="img/photo-1.jpg">-->
+            </div>
+            <div class="events-body">
+              <h3 class="events-heading">
+                <a href="@path("post/" + p.name)">@p.name</a>
+              </h3>
+              <h4 class="events-heading">
+                @for(tag <- p.tags) {
+                  <a href="@path("post/" + p.name)">
+                    <span class="label tag-@p.name @if(index%2 == 1){label-primary}else{label-default}">
+                      <i class="glyphicon glyphicon-tag"></i> @tag</span></a>
+                  &nbsp;
+                }
+              </h4>
+              <!--<p>{{excerpt characters="200"}}&hellip;</p>-->
+            </div>
+          </div>
+        </dd>
+      }
+    </dl>
+   </div>
+  <!--{{pagination}}-->
+</main>
 }
 

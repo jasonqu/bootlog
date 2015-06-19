@@ -1,63 +1,71 @@
 @(pagetitle: String)(content: Html)
 
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>@pagetitle</title>
-    <meta name="description" content="@message("site.description")">
-    <meta name="author" content="@message("author.name")">
-    <!-- TODO description author -->
-    
-    <!-- Enable responsive viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    
-    <!-- Le styles -->
-    <link rel="stylesheet" media="screen" href="@path("stylesheets/bootstrap.2.2.2.min.css")">
-    <link rel="stylesheet" media="all" type="text/css" href="@path("stylesheets/style.css?body=1")">
-    <link rel="stylesheet" media="all" type="text/css" href="@path("stylesheets/prettify.css")">
-    <link rel="stylesheet" media="all" type="text/css" href="@path("stylesheets/desert.css")">
-    <link rel="shortcut icon" type="image/png" href="@path("images/favicon.png")">
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="@message("site.description")">
+  <meta name="author" content="@message("author.name")">
+  <!-- TODO description author -->
 
-    <!-- Le fav and touch icons -->
-  <!-- Update these with your own images
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-  -->
-  
-    <link href="atom.xml" type="application/atom+xml" rel="alternate" title="bootlog ATOM Feed">
-    <link href="rss.xml" type="application/rss+xml" rel="alternate" title="bootlog RSS Feed">
-  </head>
-  <body>
-    @navbar()
-    
-    <div class="container-narrow">
-      <div class="content">
+  <title>@pagetitle</title>
+
+  <link rel="stylesheet" href="@path("css/bootstrap.min.css")">
+  <link rel="stylesheet" href="@path("css/bootflat.min.css")">
+  <link rel="stylesheet" href="@path("css/octicons.css")">
+  <link rel="stylesheet" href="@path("css/app.css")">
+
+  <link rel="shortcut icon" href="@path("img/favicon.png")">
+
+  <!-- Le styles for highlight code -->
+  <link rel="stylesheet" href="@path("css/prettify.css")">
+  <link rel="stylesheet" href="@path("css/desert.css")">
+
+  <link href="atom.xml" type="application/atom+xml" rel="alternate" title="bootlog ATOM Feed">
+  <link href="rss.xml" type="application/rss+xml" rel="alternate" title="bootlog RSS Feed">
+
+</head>
+<body>
+<div id="wrap">
+  <!--{{> header}}-->
+  @navbar()
+
+  <div class="container-fluid container-abitabove">
+    <div class="row">
+      <div class="col-lg-12 centered text-center container-withcover no-cover" style="background-image: url('img/img.jpg');">
+        <!--{{#if blog.logo}}<img src="{{blog.logo}}" alt="{{blog.title}} Logo" class="blog-logo"><br>{{/if}}-->
+        @message("site.tagline")
+      </div>
+    </div>
+  </div>
+  <!--{{> head-image}}-->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 centered">
         @content
       </div>
-      <hr>
-      <footer>
-        <p>&copy; 2014 @message("author.name")
-          with help from <a href="https://github.com/jasonqu/bootlog" target="_blank">bootlog</a> and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
-        </p>
-      </footer>
     </div>
-    
-    <!-- {% include JB/analytics %} -->
-    <!-- todo google prettify refactor -->
-    
-    <!-- 
-    <script src="@path("javascripts/prettify.js")" type="text/javascript"></script>
-     -->
-    <script src="@path("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
-    <script src="@path("javascripts/run_prettify.js?lang=scala&skin=desert")" type="text/javascript"></script>
-    <script src="@path("javascripts/lang-scala.js")" type="text/javascript"></script>
-  </body>
+  </div>
+</div>
+
+<div id="footer">
+  @footer()
+</div>
+
+<!-- {% include JB/analytics %} -->
+<!-- todo google prettify refactor -->
+<script src="@path("js/jquery-1.10.1.min.js")"></script>
+<script src="@path("js/prettify.js")"></script>
+<script src="@path("js/run_prettify.js?lang=scala&skin=desert")"></script>
+<script src="@path("js/lang-scala.js")"></script>
+
+<script src="@path("js/icheck.min.js")"></script>
+<script src="@path("js/jquery.fs.selecter.min.js")"></script>
+<script src="@path("js/jquery.fs.stepper.min.js")"></script>
+<script src="@path("js/bootstrap.min.js")"></script>
+<script src="@path("js/ghost-blog.js")"></script>
+</body>
 </html>

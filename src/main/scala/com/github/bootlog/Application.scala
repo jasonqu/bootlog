@@ -42,7 +42,7 @@ object Application extends App {
   writeFile(s"$generate_dir/categories.html", views.html.pages.categories(categories).toString())
 
   // pages
-  writeFile(s"$generate_dir/pages.html", views.html.pages.pages().toString())
+  //writeFile(s"$generate_dir/pages.html", views.html.pages.pages().toString())
 
   // tags
   val mm = new mutable.HashMap[String, mutable.Set[Post]] with collection.mutable.MultiMap[String, Post]

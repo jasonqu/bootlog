@@ -10,7 +10,7 @@ object Config {
   }
   
   val rootPath = if(conf.getString("rootPath").isEmpty()) {
-    ""
+    "/"
   } else {
     "/" + conf.getString("rootPath") + "/"
   }
