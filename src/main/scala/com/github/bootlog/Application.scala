@@ -9,7 +9,7 @@ import java.io._
 object Application extends App {
 
   def writeFile(path: String, content: String) = {
-    val p = new PrintWriter(path)
+    val p = new PrintWriter(new OutputStreamWriter(new FileOutputStream(path),"UTF-8"))
     try { p.write(content) } finally { p.close() }
   }
 
