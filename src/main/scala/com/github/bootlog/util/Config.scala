@@ -1,16 +1,17 @@
 package com.github.bootlog.util
 
-import com.typesafe.config.ConfigFactory
+import com.typesafe.config.{Config, ConfigFactory}
+
 object Config {
 
-  val conf = ConfigFactory.load();
+  var conf : Config = ConfigFactory.load()
 
   def message(key: String): String = {
     conf.getString(key)
   }
   
-  val rootPath = if(conf.getString("rootPath").isEmpty()) {
-    ""
+  lazy val rootPath = if(conf.getString("rootPath").isEmpty()) {
+    "/"
   } else {
     "/" + conf.getString("rootPath") + "/"
   }

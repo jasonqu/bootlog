@@ -3,3 +3,5 @@
 addSbtPlugin("com.typesafe.sbt" % "sbt-twirl" % "1.1.1")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "0.8.1")
+
+addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.8.5")
