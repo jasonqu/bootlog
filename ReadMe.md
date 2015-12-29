@@ -15,6 +15,7 @@ use `sbt run` to build the site and check it out in `src/site`
   [x] done:just use Source.fromURL
 [ ] blog demo
 [ ] configurable theme
+  [ ] configurable twirl template
 [ ] try markdown-js instead of pegDown
   [ ] https://github.com/evilstreak/markdown-js
 [ ] comment/analytics support

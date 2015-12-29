@@ -17,7 +17,6 @@ lazy val bootlog = (project in file("."))
     )
   )
 
-
 TwirlKeys.templateImports ++= Seq(
 "com.github.bootlog.models._",
 "com.github.bootlog.util.ConfigUtil._",
