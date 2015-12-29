@@ -1,8 +1,6 @@
 package com.github.bootlog
 
 import java.io.File
-
-import com.github.bootlog.Application._
 import com.github.bootlog.models.Post
 import com.github.bootlog.util.ConfigUtil
 import com.typesafe.config.ConfigFactory
@@ -18,27 +16,29 @@ object BootLogPlugin extends AutoPlugin {
     val makeMD = TaskKey[File]("make-md", "Generates a static markdown website for a project by using bootlog.")
     val generateDir = SettingKey[File]("generate-dir", "the output dir for bootlog.")
     val bootlogConfigFile = SettingKey[File]("bootlogConfigFile", "the user config that will be rendered in generated pages")
-    val assetResourceMapping = mappings in makeMD
+    val assetResourceMapping = SettingKey[Seq[(File, String)]]("assetResourceMapping", "the user config that will be rendered in generated pages")
   }
 
   import autoImport._
   lazy val baseSettings: Seq[Def.Setting[_]] = Seq(
     bootlogConfigFile := baseDirectory.value / "conf/application.conf",
     generateDir := baseDirectory.value / "src/site",
-    assetResourceMapping ++= Seq(
-      (generateDir.value / "stylesheets/bootstrap.2.2.2.min.css") -> "/stylesheets/bootstrap.2.2.2.min.css",
+    assetResourceMapping := Seq(
+      (generateDir.value / "stylesheets/bootstrap.2.2.2.min.css") -> "/META-INF/resources/webjars/bootstrap/2.2.2/css/bootstrap.min.css",
+      (generateDir.value / "javascripts/jquery-1.9.0.min.js") -> "/META-INF/resources/webjars/jquery/1.9.0/jquery.min.js",
       (generateDir.value / "stylesheets/style.css") -> "/stylesheets/style.css"
     ),
     makeMD := process(
       Source.fromFile(bootlogConfigFile.value).getLines().mkString("\n"),
-      generateDir.value
+      generateDir.value,
+      assetResourceMapping.value
     )
   )
 
   override val projectSettings =
     inConfig(Compile)(baseSettings)
 
-  def process(config : String, generate_dir : File) : File = {
+  def process(config : String, generate_dir : File, assets : Seq[(File, String)]) : File = {
     val charset = java.nio.charset.StandardCharsets.UTF_8
     //println(config)
 
@@ -52,15 +52,10 @@ object BootLogPlugin extends AutoPlugin {
     //  copy assets in webjar
     createDirectory(generate_dir / "stylesheets")
 
-    assetResourceMapping.value.foreach {(file, url) =>
-      writeLines(generate_dir / "stylesheets" / "bootstrap.2.2.2.min.css",
-        Source.fromURL(getClass.getResource("/stylesheets/bootstrap.2.2.2.min.css")).getLines().toSeq)
+    assets.foreach {pair =>
+      val (file, url) = pair
+      writeLines(file, Source.fromURL(getClass.getResource(url)).getLines().toSeq)
     }
-
-    writeLines(generate_dir / "stylesheets" / "bootstrap.2.2.2.min.css",
-      Source.fromURL(getClass.getResource("/stylesheets/bootstrap.2.2.2.min.css")).getLines().toSeq)
-    writeLines(generate_dir / "stylesheets/style.css",
-      Source.fromURL(getClass.getResource("/stylesheets/style.css")).getLines().toSeq)
 
     // parse posts
     val posts: Array[Post] = Post.getPosts("_content/_posts")

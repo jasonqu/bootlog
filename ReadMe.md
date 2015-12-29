@@ -20,3 +20,4 @@ use `sbt run` to build the site and check it out in `src/site`
 [ ] comment/analytics support
   [ ] https://github.com/plusjade/jekyll-bootstrap/blob/master/_config.yml
 [ ] chain generateDir and site's siteSourceDirectory
+
