@@ -1,4 +1,4 @@
-@(posts: Array[models.Post])
+@(posts: Array[Post])
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
  <title>@message("site.title")</title>

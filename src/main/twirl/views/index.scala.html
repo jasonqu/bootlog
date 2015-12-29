@@ -1,10 +1,9 @@
-@(content: String)(posts: Array[models.Post])
+@(content: String)(posts: Array[Post])
 
 @page("Hello World!")("Supporting tagline") {
 
 @{
-import util.markdown.PegDown._
-Html(processMdContent("""
+Html(_root_.com.github.bootlog.util.markdown.PegDown.processMdContent("""
 Read [TODO Quick Start]()
 
 Complete usage and documentation available at: [play-jekyll-bootstrap](https://github.com/jasonqu/play-jekyll-bootstrap)

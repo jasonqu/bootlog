@@ -7,7 +7,7 @@ lazy val bootlog = (project in file("."))
     organization := "com.github.bootlog",
     version := "0.1-SNAPSHOT",
     scalaVersion := "2.10.4",
-    //unmanagedResourceDirectories in Compile += baseDirectory.value / "src/main/asset",
+    unmanagedResourceDirectories in Compile += baseDirectory.value / "src/main/asset",
     libraryDependencies ++= Seq(
       "joda-time" % "joda-time" % "2.4",
       "org.pegdown" % "pegdown" % "1.4.2",
@@ -18,9 +18,10 @@ lazy val bootlog = (project in file("."))
   )
 
 TwirlKeys.templateImports ++= Seq(
-"com.github.bootlog.models._",
-"com.github.bootlog.util.ConfigUtil._",
-"views.html._",
-"org.joda.time._")
+  "com.github.bootlog.models._",
+  "com.github.bootlog.util._",
+  "com.github.bootlog.util.ConfigUtil._",
+  "views.html._",
+  "org.joda.time._")
 
 site.settings
