@@ -24,8 +24,8 @@ object BootLogPlugin extends AutoPlugin {
     bootlogConfigFile := baseDirectory.value / "conf/application.conf",
     generateDir := baseDirectory.value / "src/site",
     assetResourceMapping := Seq(
-      (generateDir.value / "stylesheets/bootstrap.2.2.2.min.css") -> "/META-INF/resources/webjars/bootstrap/2.2.2/css/bootstrap.min.css",
-      (generateDir.value / "javascripts/jquery-1.9.0.min.js") -> "/META-INF/resources/webjars/jquery/1.9.0/jquery.min.js",
+      (generateDir.value / "stylesheets/bootstrap.3.3.6.min.css") -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/css/bootstrap.min.css",
+      (generateDir.value / "javascripts/jquery-1.11.3.min.js") -> "/META-INF/resources/webjars/jquery/1.11.3/dist/jquery.min.js",
       (generateDir.value / "stylesheets/style.css") -> "/stylesheets/style.css"
     ),
     makeMD := process(
@@ -52,6 +52,7 @@ object BootLogPlugin extends AutoPlugin {
     //  copy assets in webjar
     assets.foreach { pair =>
       val (file, url) = pair
+      println("file : " + file)
       // TODO do not need to create dir? createDirectory(generate_dir / "stylesheets")
       writeLines(file, Source.fromURL(getClass.getResource(url)).getLines().toSeq)
     }

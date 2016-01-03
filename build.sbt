@@ -12,8 +12,9 @@ lazy val bootlog = (project in file("."))
       "joda-time" % "joda-time" % "2.4",
       "org.pegdown" % "pegdown" % "1.4.2",
       "com.typesafe" % "config" % "1.2.1",
-      "org.webjars" % "bootstrap" % "2.2.2",
-      "org.webjars" % "jquery" % "1.9.0"
+      "org.webjars.bower" % "bootstrap" % "3.3.6",
+      "org.webjars.bower" % "Bootflat" % "2.0.4",
+      "org.webjars.bower" % "jquery" % "1.11.3"
     )
   )
 
