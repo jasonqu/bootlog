@@ -50,10 +50,9 @@ object BootLogPlugin extends AutoPlugin {
     generate_dir.mkdirs()
 
     //  copy assets in webjar
-    createDirectory(generate_dir / "stylesheets")
-
-    assets.foreach {pair =>
+    assets.foreach { pair =>
       val (file, url) = pair
+      // TODO do not need to create dir? createDirectory(generate_dir / "stylesheets")
       writeLines(file, Source.fromURL(getClass.getResource(url)).getLines().toSeq)
     }
 
@@ -61,9 +60,6 @@ object BootLogPlugin extends AutoPlugin {
     val posts: Array[Post] = Post.getPosts("_content/_posts")
 
     // generate pages
-    // index TODO refine index
-    write(generate_dir / "index.html", views.html.index("")(posts).toString(), charset)
-
     // posts
     createDirectory(generate_dir / "post")
     posts.foreach { post =>
@@ -75,6 +71,14 @@ object BootLogPlugin extends AutoPlugin {
       .mapValues(_.groupBy(_.date.getMonthOfYear)
       .mapValues(_.sortWith((a, b) => a.date isAfter b.date)))
     write(generate_dir / "archive.html", views.html.pages.archive(archives).toString(), charset)
+
+    // index
+    val indexFile = new File("_content/index.md")
+    if(indexFile.exists()) {
+      write(generate_dir / "index.html", views.html.post(Post.getPost(indexFile)).toString(), charset)
+    } else {
+      write(generate_dir / "index.html", views.html.pages.archive(archives).toString(), charset)
+    }
 
     // categories
     val categories = posts.groupBy(_.category)

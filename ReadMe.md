@@ -6,19 +6,27 @@ use `sbt run` to build the site and check it out in `src/site`
 
 ## TODO
 
-[x] sbt plugin
-  [x] 1st version done
-[x] sub domain eg. blog
-[ ] todo google prettify refactor
-[x] webjar
-  [x] https://github.com/sbt/sbt-web/issues/95
-  [x] done:just use Source.fromURL
-[ ] blog demo
-[ ] configurable theme
-  [ ] configurable twirl template
-[ ] try markdown-js instead of pegDown
-  [ ] https://github.com/evilstreak/markdown-js
-[ ] comment/analytics support
-  [ ] https://github.com/plusjade/jekyll-bootstrap/blob/master/_config.yml
-[ ] chain generateDir and site's siteSourceDirectory
-
+* [x] sbt plugin
+  * [x] 1st version done
+* [x] sub domain eg. blog
+* [ ] todo google prettify refactor
+* [x] webjar
+  * [x] https://github.com/sbt/sbt-web/issues/95
+  * [x] done:just use Source.fromURL
+* [ ] blog demo
+  * [x] simple demo
+  * [ ] simple demo change to boot3
+  * [ ] my blog
+* [ ] configurable theme
+  * [ ] configurable twirl template
+* [ ] try markdown-js instead of pegDown
+  * [ ] https://github.com/evilstreak/markdown-js
+  * [ ] https://github.com/chjj/marked
+* [ ] comment/analytics support
+  * [ ] https://github.com/plusjade/jekyll-bootstrap/blob/master/_config.yml
+* [ ] chain generateDir and site's siteSourceDirectory
+* [ ] deploy to web
+* [x] index.md
+  * [x] if it exist, generate index.html
+  * [x] else if `rootpath == ""`, use archive.html as index.html
+  * [ ] else use prod_url as index.html 不这样处理了，有需要再做
