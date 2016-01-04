@@ -10,12 +10,14 @@ use `sbt run` to build the site and check it out in `src/site`
   * [x] 1st version done
 * [x] sub domain eg. blog
 * [ ] todo google prettify refactor
+  * [ ] or prism
 * [x] webjar
   * [x] https://github.com/sbt/sbt-web/issues/95
   * [x] done:just use Source.fromURL
+  * [ ] optional: could use bower instead
 * [ ] blog demo
   * [x] simple demo
-  * [ ] simple demo change to boot3
+  * [x] simple demo change to boot3
   * [ ] my blog
 * [ ] configurable theme
   * [ ] configurable twirl template
@@ -29,4 +31,6 @@ use `sbt run` to build the site and check it out in `src/site`
 * [x] index.md
   * [x] if it exist, generate index.html
   * [x] else if `rootpath == ""`, use archive.html as index.html
-  * [ ] else use prod_url as index.html 不这样处理了，有需要再做
+  * [ ] else use prod_url as index.html
+    * [ ] useless if blog has the same domain with personal website
+* [x] 统一时间格式 国际标准ISO 8601：yyyy-mm-dd，hr:mi:se（24小时制）

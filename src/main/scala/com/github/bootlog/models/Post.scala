@@ -1,6 +1,6 @@
 package com.github.bootlog.models
 
-import org.joda.time._
+import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import com.github.bootlog.util.markdown.PegDown._
 import java.io.File
@@ -13,9 +13,18 @@ case class Post(
   tags: List[String],
   date: DateTime,
   html: String) {
+  lazy val getDate = Post.format.print(date)
+  lazy val getDateWithWeek = Post.formatWithWeek.print(date)
+  lazy val getYear =Post.yearFormat.print(date)
+  lazy val getMonth =Post.monthFormat.print(date)
 }
 
 object Post {
+  val format = DateTimeFormat.forPattern("yyyy-MM-dd")
+  val yearFormat = DateTimeFormat.forPattern("yyyy")
+  val monthFormat = DateTimeFormat.forPattern("MMM")
+  val formatWithWeek = DateTimeFormat.forPattern("yyyy-MM-dd EE")
+
   def recursiveListFiles(f: File): Array[File] = {
     val these = f.listFiles
     these ++ these.filter(_.isDirectory).flatMap(recursiveListFiles)
@@ -26,9 +35,11 @@ object Post {
 
     // TODO refine date
     val date = try {
-      DateTimeFormat.forPattern("yyyy-MM-dd").parseDateTime(file.getName.substring(0, 10))
+      format.parseDateTime(file.getName.substring(0, 10))
     } catch {
-      case _: Throwable => new DateTime(file.lastModified())
+      case _: Throwable =>
+        println(file.getName + " -> " + new DateTime(file.lastModified()))
+        new DateTime(file.lastModified())
     }
 
     Post(

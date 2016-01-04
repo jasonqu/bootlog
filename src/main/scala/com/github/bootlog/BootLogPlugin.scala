@@ -24,8 +24,13 @@ object BootLogPlugin extends AutoPlugin {
     bootlogConfigFile := baseDirectory.value / "conf/application.conf",
     generateDir := baseDirectory.value / "src/site",
     assetResourceMapping := Seq(
+      // css
       (generateDir.value / "stylesheets/bootstrap.3.3.6.min.css") -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/css/bootstrap.min.css",
+      (generateDir.value / "stylesheets/bootflat-2.0.4.min.css") -> "/META-INF/resources/webjars/Bootflat/2.0.4/bootflat/css/bootflat.min.css",
+      // js
       (generateDir.value / "javascripts/jquery-1.11.3.min.js") -> "/META-INF/resources/webjars/jquery/1.11.3/dist/jquery.min.js",
+      (generateDir.value / "javascripts/bootstrap-3.3.6.min.js") -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/js/bootstrap.min.js",
+      // customize
       (generateDir.value / "stylesheets/style.css") -> "/stylesheets/style.css"
     ),
     makeMD := process(
@@ -54,6 +59,7 @@ object BootLogPlugin extends AutoPlugin {
       val (file, url) = pair
       println("file : " + file)
       // TODO do not need to create dir? createDirectory(generate_dir / "stylesheets")
+      // TODO check file exist?
       writeLines(file, Source.fromURL(getClass.getResource(url)).getLines().toSeq)
     }
 

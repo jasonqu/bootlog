@@ -10,6 +10,7 @@ lazy val bootlog = (project in file("."))
     unmanagedResourceDirectories in Compile += baseDirectory.value / "src/main/asset",
     libraryDependencies ++= Seq(
       "joda-time" % "joda-time" % "2.4",
+      "org.joda" % "joda-convert" % "1.2",
       "org.pegdown" % "pegdown" % "1.4.2",
       "com.typesafe" % "config" % "1.2.1",
       "org.webjars.bower" % "bootstrap" % "3.3.6",
