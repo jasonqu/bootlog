@@ -20,7 +20,7 @@ use `sbt run` to build the site and check it out in `src/site`
   * [x] simple demo change to boot3
   * [ ] my blog
 * [ ] configurable theme
-  * [ ] configurable twirl template
+  * [x] configurable twirl template -> not acceptable, use configurable assets instead
 * [ ] try markdown-js instead of pegDown
   * [ ] https://github.com/evilstreak/markdown-js
   * [ ] https://github.com/chjj/marked
@@ -33,4 +33,3 @@ use `sbt run` to build the site and check it out in `src/site`
   * [x] else if `rootpath == ""`, use archive.html as index.html
   * [ ] else use prod_url as index.html
     * [ ] useless if blog has the same domain with personal website
-* [x] 统一时间格式 国际标准ISO 8601：yyyy-mm-dd，hr:mi:se（24小时制）
