@@ -20,4 +20,8 @@ object ConfigUtil {
   def path(relative: String): String = {
     rootPath + relative
   }
+
+  var assets : Seq[String] = Seq[String]()
+  lazy val CssList = assets.filter(_.endsWith(".css"))
+  lazy val JsList = assets.filter(_.endsWith(".js"))
 }

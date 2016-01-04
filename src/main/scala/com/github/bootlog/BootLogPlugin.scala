@@ -16,7 +16,7 @@ object BootLogPlugin extends AutoPlugin {
     val makeMD = TaskKey[File]("make-md", "Generates a static markdown website for a project by using bootlog.")
     val generateDir = SettingKey[File]("generate-dir", "the output dir for bootlog.")
     val bootlogConfigFile = SettingKey[File]("bootlogConfigFile", "the user config that will be rendered in generated pages")
-    val assetResourceMapping = SettingKey[Seq[(File, String)]]("assetResourceMapping", "the user config that will be rendered in generated pages")
+    val assetResourceMapping = SettingKey[Seq[(String, String)]]("assetResourceMapping", "the user config that will be rendered in generated pages")
   }
 
   import autoImport._
@@ -25,13 +25,13 @@ object BootLogPlugin extends AutoPlugin {
     generateDir := baseDirectory.value / "src/site",
     assetResourceMapping := Seq(
       // css
-      (generateDir.value / "stylesheets/bootstrap.3.3.6.min.css") -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/css/bootstrap.min.css",
-      (generateDir.value / "stylesheets/bootflat-2.0.4.min.css") -> "/META-INF/resources/webjars/Bootflat/2.0.4/bootflat/css/bootflat.min.css",
-      // js
-      (generateDir.value / "javascripts/jquery-1.11.3.min.js") -> "/META-INF/resources/webjars/jquery/1.11.3/dist/jquery.min.js",
-      (generateDir.value / "javascripts/bootstrap-3.3.6.min.js") -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/js/bootstrap.min.js",
+      "stylesheets/bootstrap.3.3.6.min.css" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/css/bootstrap.min.css",
+      "stylesheets/bootflat-2.0.4.min.css" -> "/META-INF/resources/webjars/Bootflat/2.0.4/bootflat/css/bootflat.min.css",
+      // js jquery should be before bootstrap
+      "javascripts/jquery-1.11.3.min.js" -> "/META-INF/resources/webjars/jquery/1.11.3/dist/jquery.min.js",
+      "javascripts/bootstrap-3.3.6.min.js" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/js/bootstrap.min.js",
       // customize
-      (generateDir.value / "stylesheets/style.css") -> "/stylesheets/style.css"
+      "stylesheets/style.css" -> "/stylesheets/style.css"
     ),
     makeMD := process(
       Source.fromFile(bootlogConfigFile.value).getLines().mkString("\n"),
@@ -43,7 +43,7 @@ object BootLogPlugin extends AutoPlugin {
   override val projectSettings =
     inConfig(Compile)(baseSettings)
 
-  def process(config : String, generate_dir : File, assets : Seq[(File, String)]) : File = {
+  def process(config : String, generate_dir : File, assets : Seq[(String, String)]) : File = {
     val charset = java.nio.charset.StandardCharsets.UTF_8
     //println(config)
 
@@ -56,12 +56,12 @@ object BootLogPlugin extends AutoPlugin {
 
     //  copy assets in webjar
     assets.foreach { pair =>
-      val (file, url) = pair
-      println("file : " + file)
+      val (filePath, url) = pair
       // TODO do not need to create dir? createDirectory(generate_dir / "stylesheets")
       // TODO check file exist?
-      writeLines(file, Source.fromURL(getClass.getResource(url)).getLines().toSeq)
+      writeLines(generate_dir / filePath, Source.fromURL(getClass.getResource(url)).getLines().toSeq)
     }
+    ConfigUtil.assets = assets.map(_._1)
 
     // parse posts
     val posts: Array[Post] = Post.getPosts("_content/_posts")
