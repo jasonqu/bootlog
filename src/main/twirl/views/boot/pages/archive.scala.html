@@ -1,6 +1,6 @@
 @(map:Map[Int,Map[Int,Array[Post]]])
 
-@page("Archive")("") {
+@boot.page("Archive")("") {
 	@for(k <- map.keys.toList.sortBy(-_)) {
 	<h2>@k</h2>
 		@for(k2 <- map(k).keys.toList.sortBy(-_)) {

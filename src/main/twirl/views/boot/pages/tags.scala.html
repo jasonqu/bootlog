@@ -1,6 +1,6 @@
 @(map:scala.collection.mutable.HashMap[String,scala.collection.mutable.Set[Post]])
 
-@page("Tags")("") {
+@boot.page("Tags")("") {
 <ul class="tag_box inline">
 @for(k <- map.keys) {
   <li><a href="tags.html#@k-ref">@k <span>@map(k).size</span></a></li>

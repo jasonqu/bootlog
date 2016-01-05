@@ -1,4 +1,4 @@
-@(pagetitle: String)(content: Html)
+@(pagetitle: String)(post: Option[Post])(content: Html)
 
 <!DOCTYPE html>
 <html>
@@ -27,8 +27,11 @@
 
     <div id="wrap">
       @navbar()
-      <!-- TODO {{> header}} -->
-      <!-- TODO {{> head-image}} -->
+      @if(post.isDefined) {
+        @header()
+      } else {
+        @postHeader(post.get)
+      }
 
       <div class="container">
         <div class="row">

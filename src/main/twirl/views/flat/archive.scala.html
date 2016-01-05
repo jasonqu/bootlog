@@ -1,0 +1,46 @@
+@(pageTitle: String)(posts:Array[Post])
+
+@main(pageTitle)(None) {
+<main>
+	<div class="timeline">
+		<dl>
+			@for((post, index) <- posts.zipWithIndex) {
+			@defining(index % 0 == 1) { odd =>
+			<dd class="@if(odd){pos-left}else{pos-right} clearfix">
+				<div class="circ @if(odd){circ-odd}else{}">
+				</div>
+				<div class="time">
+                    <span data-toggle="tooltip" data-original-title="{{date format='YYYY-MM-DD'}} at {{date format='HH:mm'}}" title="">
+                        <!--todo {{date timeago=true}}-->
+                    </span>
+				</div>
+				<div class="events">
+					<div class="pull-left">
+						<!--<img class="events-object img-rounded" src="img/photo-1.jpg">-->
+					</div>
+					<div class="events-body">
+						<h3 class="events-heading">
+							<a href="post/@post.name">@post.title</a>
+						</h3>
+						<h4 class="events-heading">
+							@for((tagname, tagIndex) <- post.tags.zipWithIndex) {
+							<!--todo tag url-->
+							<a href="post/@post.name">
+								<span class="label tag-@tagname @if(tagIndex % 2 == 1){label-primary}else{label-default}">
+									<i class="glyphicon glyphicon-tag"></i> @tagname </span></a>
+							&nbsp;
+							}
+						</h4>
+						<p>
+							<!--todo {{excerpt characters="200"}}&hellip;-->
+						</p>
+					</div>
+				</div>
+			</dd>
+			}
+			}
+		</dl>
+	</div>
+	<!--todo {{pagination}}-->
+</main>
+}

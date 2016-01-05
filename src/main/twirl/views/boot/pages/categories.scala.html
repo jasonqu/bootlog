@@ -1,6 +1,6 @@
 @(map:Map[String,Array[Post]])
 
-@page("Categories")("") {
+@boot.page("Categories")("") {
 <ul class="tag_box inline">
 @for(k <- map.keys) {
   <li><a href="categories.html#@k-ref">@k <span>@map(k).length</span></a></li>

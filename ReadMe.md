@@ -33,3 +33,9 @@ use `sbt run` to build the site and check it out in `src/site`
   * [x] else if `rootpath == ""`, use archive.html as index.html
   * [ ] else use prod_url as index.html
     * [ ] useless if blog has the same domain with personal website
+* [ ] bootflat https://github.com/fabienwang/Ghost-Flat
+  * [x] head-image
+  * [ ] pagination
+  * [ ] default-wide
+  * [ ] post
+  * [x] tags -> reuse archive

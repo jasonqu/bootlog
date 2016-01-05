@@ -1,39 +1,13 @@
-@(item: Post)
+@(post: Post)
 
-@main(item.title) {
-<!--<main>-->
-  <!--<article class="{{post_class}}">-->
-    <!--{{#post}}-->
-    <!--<section class="posts">-->
-      <!--{{content}}-->
-      <!--<hr />-->
-    <!--</section>-->
-    <!--{{/post}}-->
-  <!--</article>-->
-<!--</main>-->
+@main(post.title)(Some(post)) {
 
-
-
-<div class="page-header">
-  <h1>@item.title <small>@item.tagline</small></h1>
-</div>
-
-<div class="row-fluid post-full">
-  <div class="span12">
-    <div class="date">
-      <span>@item.getDateWithWeek</span>
-    </div>
-    <div class="content">
-      @Html(item.html)
-    </div>
-    
-  <!-- todo categories 参考post.html -->
-  <!-- todo tags 参考post.html -->
-    <hr>
-    <!-- pagination previous next 参考post.html -->
-    <hr>
-    <!-- comments -->
-  </div>
-</div>
-
+<main>
+  <article class="">
+    <section class="posts">
+      @Html(post.html)
+      <hr />
+    </section>
+  </article>
+</main>
 }

@@ -1,0 +1,22 @@
+@(post: Post)
+
+<div class="container-fluid container-abitabove">
+  <div class="row">
+    <!--todo post.image  {{#if post.image}}background-image: url({{post.image}});{{/if}}-->
+    <div class="col-lg-12 centered text-center container-withcover no-cover">
+      <h1>@post.title <small>@post.tagline</small></h1>
+      <!--{{^if post.page}}-->
+      <!--<h5>-->
+        <!--<time datetime="{{date format='YYYY-MM-DD'}}"><span class="mega-octicon octicon-calendar"></span> {{date format="YYYY-MM-DD"}} at {{date format="HH:mm"}}</time>-->
+      <!--</h5>-->
+      <!--{{/if}}-->
+      @for((tagname, tagIndex) <- post.tags.zipWithIndex) {
+      <!--todo tag url-->
+      <a href="post/@post.name">
+        <span class="label tag-@tagname @if(tagIndex % 2 == 1){label-primary}else{label-default}">
+          <i class="glyphicon glyphicon-tag"></i> @tagname </span></a>
+      &nbsp;
+      }
+    </div>
+  </div>
+</div>

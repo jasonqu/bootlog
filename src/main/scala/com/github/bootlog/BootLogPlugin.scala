@@ -1,9 +1,10 @@
 package com.github.bootlog
 
 import java.io.File
+import java.nio.charset.Charset
 import com.github.bootlog.models.Post
 import com.github.bootlog.util.ConfigUtil
-import com.typesafe.config.ConfigFactory
+import com.typesafe.config.{Config, ConfigFactory}
 import sbt.IO._
 import sbt._
 import Keys._
@@ -43,8 +44,9 @@ object BootLogPlugin extends AutoPlugin {
   override val projectSettings =
     inConfig(Compile)(baseSettings)
 
+  val charset = java.nio.charset.StandardCharsets.UTF_8
+
   def process(config : String, generate_dir : File, assets : Seq[(String, String)]) : File = {
-    val charset = java.nio.charset.StandardCharsets.UTF_8
     //println(config)
 
     val conf = ConfigFactory.parseString(config)
@@ -66,48 +68,65 @@ object BootLogPlugin extends AutoPlugin {
     // parse posts
     val posts: Array[Post] = Post.getPosts("_content/_posts")
 
+    if(true) {
+      processBootflatTheme(generate_dir, conf, posts)
+    } else {
+      processDefaultTheme(generate_dir, conf, posts)
+    }
+
+    generate_dir
+  }
+  def processBootflatTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
+    createDirectory(generate_dir / "post")
+    posts.foreach { post =>
+      write(generate_dir / "post" / post.name, views.html.flat.post(post).toString(), charset)
+    }
+  }
+
+
+  def processDefaultTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
     // generate pages
     // posts
     createDirectory(generate_dir / "post")
     posts.foreach { post =>
-      write(generate_dir / "post" / post.name, views.html.post(post).toString(), charset)
+      write(generate_dir / "post" / post.name, views.html.boot.post(post).toString(), charset)
     }
 
     // archive page
     val archives = posts.groupBy(_.date.getYear)
       .mapValues(_.groupBy(_.date.getMonthOfYear)
       .mapValues(_.sortWith((a, b) => a.date isAfter b.date)))
-    write(generate_dir / "archive.html", views.html.pages.archive(archives).toString(), charset)
+    write(generate_dir / "archive.html", views.html.boot.pages.archive(archives).toString(), charset)
 
     // index
-    val indexFile = new File("_content/index.md")
-    if(indexFile.exists()) {
-      write(generate_dir / "index.html", views.html.post(Post.getPost(indexFile)).toString(), charset)
+    val indexFile = new sbt.File("_content/index.md")
+    if (indexFile.exists()) {
+      write(generate_dir / "index.html", views.html.boot.post(Post.getPost(indexFile)).toString(), charset)
     } else {
-      write(generate_dir / "index.html", views.html.pages.archive(archives).toString(), charset)
+      write(generate_dir / "index.html", views.html.boot.pages.archive(archives).toString(), charset)
     }
 
     // categories
     val categories = posts.groupBy(_.category)
-    write(generate_dir / "categories.html", views.html.pages.categories(categories).toString(), charset)
+    write(generate_dir / "categories.html", views.html.boot.pages.categories(categories).toString(), charset)
 
     // pages
-    write(generate_dir / "pages.html", views.html.pages.pages().toString(), charset)
+    write(generate_dir / "pages.html", views.html.boot.pages.pages().toString(), charset)
 
     // tags
-    val mm = new mutable.HashMap[String, mutable.Set[Post]] with collection.mutable.MultiMap[String, Post]
+    val mm = new mutable.HashMap[String, mutable.Set[Post]] with mutable.MultiMap[String, Post]
     for (post <- posts) {
       post.tags.foreach { tag =>
         mm.addBinding(tag, post)
       }
     }
-    write(generate_dir / "tags.html", views.html.pages.tags(mm).toString(), charset)
+    write(generate_dir / "tags.html", views.html.boot.pages.tags(mm).toString(), charset)
 
     // atom
-    write(generate_dir / "atom.xml", views.xml.pages.atom(posts).toString().trim(), charset)
+    write(generate_dir / "atom.xml", views.xml.boot.pages.atom(posts).toString().trim(), charset)
 
     // rss
-    write(generate_dir / "rss.xml", views.xml.pages.rss(posts).toString().trim(), charset)
+    write(generate_dir / "rss.xml", views.xml.boot.pages.rss(posts).toString().trim(), charset)
 
     // sitemap
     val pages = "archive.html" :: "atom.xml" :: "categories.html" :: "index.html" :: "pages.html" :: "rss.xml" :: "sitemap.txt" :: "tags.html" :: Nil
@@ -118,7 +137,5 @@ object BootLogPlugin extends AutoPlugin {
       conf.getString("production_url") + "/post/" + _.name
     }.mkString("\n")
     write(generate_dir / "sitemap.txt", ps + "\n" + pts, charset)
-
-    generate_dir
   }
 }
