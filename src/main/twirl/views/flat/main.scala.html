@@ -28,9 +28,9 @@
     <div id="wrap">
       @navbar()
       @if(post.isDefined) {
-        @header()
-      } else {
         @postHeader(post.get)
+      } else {
+        @header()
       }
 
       <div class="container">

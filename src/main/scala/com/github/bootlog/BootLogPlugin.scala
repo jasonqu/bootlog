@@ -76,13 +76,14 @@ object BootLogPlugin extends AutoPlugin {
 
     generate_dir
   }
+
   def processBootflatTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
-    createDirectory(generate_dir / "post")
     posts.foreach { post =>
       write(generate_dir / "post" / post.name, views.html.flat.post(post).toString(), charset)
     }
-  }
 
+    write(generate_dir / "archive.html", views.html.flat.archive(posts).toString(), charset)
+  }
 
   def processDefaultTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
     // generate pages
