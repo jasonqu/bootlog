@@ -28,6 +28,12 @@ object BootLogPlugin extends AutoPlugin {
       // css
       "stylesheets/bootstrap.3.3.6.min.css" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/css/bootstrap.min.css",
       "stylesheets/bootflat-2.0.4.min.css" -> "/META-INF/resources/webjars/Bootflat/2.0.4/bootflat/css/bootflat.min.css",
+      // fonts
+      "stylesheets/octicons.css" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.css",
+      "fonts/octicons.eot" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.eot",
+      "fonts/octicons.svg" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.svg",
+      "fonts/octicons.ttf" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.ttf",
+      "fonts/octicons.woff" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.woff",
       // js jquery should be before bootstrap
       "javascripts/jquery-1.11.3.min.js" -> "/META-INF/resources/webjars/jquery/1.11.3/dist/jquery.min.js",
       "javascripts/bootstrap-3.3.6.min.js" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/js/bootstrap.min.js",

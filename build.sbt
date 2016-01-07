@@ -15,7 +15,8 @@ lazy val bootlog = (project in file("."))
       "com.typesafe" % "config" % "1.2.1",
       "org.webjars.bower" % "bootstrap" % "3.3.6",
       "org.webjars.bower" % "Bootflat" % "2.0.4",
-      "org.webjars.bower" % "jquery" % "1.11.3"
+      "org.webjars.bower" % "jquery" % "1.11.3",
+      "org.webjars.bower" % "octicons" % "3.1.0"
     )
   )
 
