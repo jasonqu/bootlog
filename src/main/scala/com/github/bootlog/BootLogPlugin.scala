@@ -32,7 +32,8 @@ object BootLogPlugin extends AutoPlugin {
       "javascripts/jquery-1.11.3.min.js" -> "/META-INF/resources/webjars/jquery/1.11.3/dist/jquery.min.js",
       "javascripts/bootstrap-3.3.6.min.js" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/js/bootstrap.min.js",
       // customize
-      "stylesheets/style.css" -> "/stylesheets/style.css"
+      "stylesheets/app.css" -> "/stylesheets/app.css"
+      //"stylesheets/style.css" -> "/stylesheets/style.css"
     ),
     makeMD := process(
       Source.fromFile(bootlogConfigFile.value).getLines().mkString("\n"),
