@@ -1,6 +1,8 @@
 package com.github.bootlog.util
 
 import com.typesafe.config.{Config, ConfigFactory}
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 
 object ConfigUtil {
 
@@ -24,4 +26,8 @@ object ConfigUtil {
   var assets : Seq[String] = Seq[String]()
   lazy val CssList = assets.filter(_.endsWith(".css"))
   lazy val JsList = assets.filter(_.endsWith(".js"))
+
+  def displayDate(format: String, date: DateTime): String = {
+    DateTimeFormat.forPattern(format).print(date)
+  }
 }

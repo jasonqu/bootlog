@@ -22,7 +22,8 @@ object PegDown {
       val (k, v) = line.span(_ != ':')
       (k.trim, v.drop(1).trim.replaceAll("\"", ""))
     }
-    (meta.toMap, pro.markdownToHtml(md.drop(1).mkString("\n")))
+    val mdContent = md.drop(1).mkString("\n")
+    (meta.toMap, pro.markdownToHtml(mdContent), mdContent.substring(0, 200))
   }
 
   def processMdContent(md: String) = {

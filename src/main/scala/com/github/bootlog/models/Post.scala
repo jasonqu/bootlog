@@ -12,16 +12,19 @@ case class Post(
   category: String,
   tags: List[String],
   date: DateTime,
+  excerpt: String,
   html: String) {
   lazy val getDate = Post.format.print(date)
   lazy val getDateWithWeek = Post.formatWithWeek.print(date)
   lazy val getYear =Post.yearFormat.print(date)
+  lazy val getYearMonth =Post.yearMonthFormat.print(date)
   lazy val getMonth =Post.monthFormat.print(date)
 }
 
 object Post {
   val format = DateTimeFormat.forPattern("yyyy-MM-dd")
   val yearFormat = DateTimeFormat.forPattern("yyyy")
+  val yearMonthFormat = DateTimeFormat.forPattern("yyyy MMM")
   val monthFormat = DateTimeFormat.forPattern("MMM")
   val formatWithWeek = DateTimeFormat.forPattern("yyyy-MM-dd EE")
 
@@ -31,7 +34,7 @@ object Post {
   }
 
   def getPost(file: File) = {
-    val (metadata, content) = processMdFile(file)
+    val (metadata, content, excerpt) = processMdFile(file)
 
     // TODO refine date
     val date = try {
@@ -51,6 +54,7 @@ object Post {
       s.substring(1, s.length() - 1).split(",").map(_.trim()).toList
     },
     date,
+    metadata.getOrElse("excerpt", excerpt),
     content)
   }
 

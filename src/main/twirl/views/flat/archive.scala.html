@@ -1,23 +1,25 @@
-@(posts:Array[Post])
+@(postGroup:List[(String, Array[Post])])
 
 @main("Archive")(None) {
 <main>
 	<div class="timeline">
 		<dl>
+			@for((date, posts) <- postGroup) {
+			<dt>@date</dt>
 			@for((post, index) <- posts.zipWithIndex) {
 			@defining(index % 2 == 1) { odd =>
 			<dd class="@if(odd){pos-left}else{pos-right} clearfix">
 				<div class="circ @if(odd){circ-odd}else{}">
 				</div>
-				<div class="time">
-                    <span data-toggle="tooltip" data-original-title="{{date format='YYYY-MM-DD'}} at {{date format='HH:mm'}}" title="">
-                        <!--todo {{date timeago=true}}-->
-                    </span>
-				</div>
+				<div class="time">@displayDate("MMM dd", post.date)</div>
+                    <!--<span data-toggle="tooltip" data-original-title="{{date format='YYYY-MM-DD'}} at {{date format='HH:mm'}}" title="">-->
+						<!--@post.getDate-->
+                        <!-- todo {{date timeago=true}} in javascript and the width -->
+                    <!--</span>-->
 				<div class="events">
-					<div class="pull-left">
+					<!--<div class="pull-left">-->
 						<!--<img class="events-object img-rounded" src="img/photo-1.jpg">-->
-					</div>
+					<!--</div>-->
 					<div class="events-body">
 						<h3 class="events-heading">
 							<a href="posts/@post.name">@post.title</a>
@@ -31,12 +33,11 @@
 							&nbsp;
 							}
 						</h4>
-						<p>
-							<!--todo {{excerpt characters="200"}}&hellip;-->
-						</p>
+						<p>@post.excerpt &hellip;</p>
 					</div>
 				</div>
 			</dd>
+			}
 			}
 			}
 		</dl>

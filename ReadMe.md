@@ -21,6 +21,8 @@ use `sbt run` to build the site and check it out in `src/site`
   * [ ] my blog
 * [ ] configurable theme
   * [x] configurable twirl template -> not acceptable, use configurable assets instead
+  * [ ] http://bootflat.github.io/documentation.html background
+  * [ ] theme example http://themes.jekyllbootstrap.com/preview/the-program/
 * [ ] try markdown-js instead of pegDown
   * [ ] https://github.com/evilstreak/markdown-js
   * [ ] https://github.com/chjj/marked
@@ -34,8 +36,9 @@ use `sbt run` to build the site and check it out in `src/site`
   * [ ] else use prod_url as index.html
     * [ ] useless if blog has the same domain with personal website
 * [ ] bootflat https://github.com/fabienwang/Ghost-Flat
-  * [x] head-image
+  * [ ] head image
+  * [ ] blog image
   * [ ] pagination
-  * [ ] default-wide
-  * [ ] post
-  * [x] tags -> reuse archive
+  * [x] default-wide
+  * [x] post
+  * [ ] tags -> reuse archive

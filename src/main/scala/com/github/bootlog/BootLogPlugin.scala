@@ -29,6 +29,10 @@ object BootLogPlugin extends AutoPlugin {
       "stylesheets/bootstrap.3.3.6.min.css" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/css/bootstrap.min.css",
       "stylesheets/bootflat-2.0.4.min.css" -> "/META-INF/resources/webjars/Bootflat/2.0.4/bootflat/css/bootflat.min.css",
       // fonts
+      "fonts/glyphicons-halflings-regular.eot" -> "/META-INF/resources/webjars/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.eot",
+      "fonts/glyphicons-halflings-regular.woff" -> "/META-INF/resources/webjars/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.woff",
+      "fonts/glyphicons-halflings-regular.ttf" -> "/META-INF/resources/webjars/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.ttf",
+      "fonts/glyphicons-halflings-regular.woff2" -> "/META-INF/resources/webjars/bootstrap/3.3.6/fonts/glyphicons-halflings-regular.woff2",
       "stylesheets/octicons.css" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.css",
       "stylesheets/octicons.eot" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.eot",
       "stylesheets/octicons.svg" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.svg",
@@ -66,11 +70,13 @@ object BootLogPlugin extends AutoPlugin {
     //  copy assets in webjar
     assets.foreach { pair =>
       val (filePath, url) = pair
-      // TODO do not need to create dir? createDirectory(generate_dir / "stylesheets")
-      // TODO check file exist?
-      println(url)
-      write(generate_dir / filePath, ByteStreams.toByteArray(getClass.getResource(url).openStream))
-//      writeLines(generate_dir / filePath, Source.fromURL(getClass.getResource(url)).getLines().toSeq)
+      try {
+        write(generate_dir / filePath, ByteStreams.toByteArray(getClass.getResource(url).openStream))
+      } catch {
+        case e : Throwable =>
+          println(s"catch Exception when copy $url")
+          e.printStackTrace
+      }
     }
     ConfigUtil.assets = assets.map(_._1)
 
@@ -87,11 +93,13 @@ object BootLogPlugin extends AutoPlugin {
   }
 
   def processBootflatTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
+    val postGroup: List[(String, Array[Post])] = posts.groupBy(p => p.date.getYear * 100 + p.date.getMonthOfYear)
+      .toList.sortBy(_._1).map(p => (p._2(0).getYearMonth, p._2))
     posts.foreach { post =>
-      write(generate_dir / "post" / post.name, views.html.flat.post(post).toString(), charset)
+      write(generate_dir / "posts" / post.name, views.html.flat.post(post).toString(), charset)
     }
 
-    write(generate_dir / "archive.html", views.html.flat.archive(posts).toString(), charset)
+    write(generate_dir / "index.html", views.html.flat.archive(postGroup).toString(), charset)
   }
 
   def processDefaultTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
