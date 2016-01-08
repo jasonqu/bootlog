@@ -1,9 +1,9 @@
 package com.github.bootlog
 
 import java.io.File
-import java.nio.charset.Charset
 import com.github.bootlog.models.Post
 import com.github.bootlog.util.ConfigUtil
+import com.google.common.io.ByteStreams
 import com.typesafe.config.{Config, ConfigFactory}
 import sbt.IO._
 import sbt._
@@ -30,10 +30,10 @@ object BootLogPlugin extends AutoPlugin {
       "stylesheets/bootflat-2.0.4.min.css" -> "/META-INF/resources/webjars/Bootflat/2.0.4/bootflat/css/bootflat.min.css",
       // fonts
       "stylesheets/octicons.css" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.css",
-      "fonts/octicons.eot" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.eot",
-      "fonts/octicons.svg" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.svg",
-      "fonts/octicons.ttf" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.ttf",
-      "fonts/octicons.woff" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.woff",
+      "stylesheets/octicons.eot" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.eot",
+      "stylesheets/octicons.svg" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.svg",
+      "stylesheets/octicons.ttf" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.ttf",
+      "stylesheets/octicons.woff" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.woff",
       // js jquery should be before bootstrap
       "javascripts/jquery-1.11.3.min.js" -> "/META-INF/resources/webjars/jquery/1.11.3/dist/jquery.min.js",
       "javascripts/bootstrap-3.3.6.min.js" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/js/bootstrap.min.js",
@@ -68,7 +68,9 @@ object BootLogPlugin extends AutoPlugin {
       val (filePath, url) = pair
       // TODO do not need to create dir? createDirectory(generate_dir / "stylesheets")
       // TODO check file exist?
-      writeLines(generate_dir / filePath, Source.fromURL(getClass.getResource(url)).getLines().toSeq)
+      println(url)
+      write(generate_dir / filePath, ByteStreams.toByteArray(getClass.getResource(url).openStream))
+//      writeLines(generate_dir / filePath, Source.fromURL(getClass.getResource(url)).getLines().toSeq)
     }
     ConfigUtil.assets = assets.map(_._1)
 

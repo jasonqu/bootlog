@@ -9,6 +9,7 @@ lazy val bootlog = (project in file("."))
     scalaVersion := "2.10.4",
     unmanagedResourceDirectories in Compile += baseDirectory.value / "src/main/asset",
     libraryDependencies ++= Seq(
+      "com.google.guava" % "guava" % "19.0",
       "joda-time" % "joda-time" % "2.4",
       "org.joda" % "joda-convert" % "1.2",
       "org.pegdown" % "pegdown" % "1.4.2",
