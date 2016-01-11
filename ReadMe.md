@@ -23,6 +23,7 @@ use `sbt run` to build the site and check it out in `src/site`
   * [x] configurable twirl template -> not acceptable, use configurable assets instead
   * [ ] http://bootflat.github.io/documentation.html background
   * [ ] theme example http://themes.jekyllbootstrap.com/preview/the-program/
+  * [ ] configurable navbar
 * [ ] try markdown-js instead of pegDown
   * [ ] https://github.com/evilstreak/markdown-js
   * [ ] https://github.com/chjj/marked

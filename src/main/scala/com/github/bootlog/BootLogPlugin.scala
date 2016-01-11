@@ -96,13 +96,23 @@ object BootLogPlugin extends AutoPlugin {
   }
 
   def processBootflatTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
-    val postGroup: List[(String, Array[Post])] = posts.groupBy(p => p.date.getYear * 100 + p.date.getMonthOfYear)
-      .toList.sortBy(_._1).map(p => (p._2(0).getYearMonth, p._2))
+    val posts_per_page = if(conf.getInt("posts_per_page") < 10) 10 else conf.getInt("posts_per_page")
+
+    val postGroup: List[List[(String, Array[Post])]] = posts.groupBy(p => p.date.getYear * 100 + p.date.getMonthOfYear)
+      .toList.sortBy(_._1).map(p => (p._2(0).getYearMonth, p._2)).grouped(posts_per_page).toList
+    val totalPage = postGroup.size
+
     posts.foreach { post =>
       write(generate_dir / "posts" / post.name, views.html.flat.post(post).toString(), charset)
     }
 
-    write(generate_dir / "index.html", views.html.flat.archive(postGroup).toString(), charset)
+    if(totalPage == 1) {
+      write(generate_dir / "index.html", views.html.flat.archive(postGroup.head).toString(), charset)
+    } else {
+      postGroup.foreach { posts =>
+
+      }
+    }
   }
 
   def processDefaultTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {

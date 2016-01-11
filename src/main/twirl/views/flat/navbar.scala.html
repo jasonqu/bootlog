@@ -6,13 +6,18 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      @defining(message("site_image")) { hasLogo =>
+      @if(hasLogo.isEmpty) {
+      <a class="navbar-brand glyphicon glyphicon-home" href="/"></a>
+      } else {
+      <a class="navbar-brand pull-left" href="/"><img src="@path(message("site_image"))" class="navbar-logo" alt="logo"/>&nbsp;@message("site.title")</a>
+      }}
       <!--<a class="navbar-brand pull-left" href={{blog.url}}>{{#if blog.logo}}<img src="{{blog.logo}}" class="navbar-logo" alt="logo" />{{/if}} {{blog.title}}</a>-->
       <!--todo blog-url blog-logo-->
-      <a class="navbar-brand glyphicon glyphicon-home" href="/"></a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        @for(p <- ("archive.html", "Archive") :: ("categories.html", "Categories") :: ("pages.html", "Pages") :: ("tags.html", "Tags") :: Nil) {
+        @for(p <- ("archive.html", "Archive") :: ("categories.html", "Categories") :: Nil) {
         <li><a href="@path(p._1)">@p._2</a></li>
         }
         <!--todo refine-->
