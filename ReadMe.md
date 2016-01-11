@@ -36,8 +36,8 @@ use `sbt run` to build the site and check it out in `src/site`
   * [ ] else use prod_url as index.html
     * [ ] useless if blog has the same domain with personal website
 * [ ] bootflat https://github.com/fabienwang/Ghost-Flat
-  * [ ] head image
-  * [ ] blog image
+  * [x] head image
+  * [x] blog image
   * [ ] pagination
   * [x] default-wide
   * [x] post

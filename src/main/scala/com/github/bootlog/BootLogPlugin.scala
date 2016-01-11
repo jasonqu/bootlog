@@ -38,6 +38,9 @@ object BootLogPlugin extends AutoPlugin {
       "stylesheets/octicons.svg" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.svg",
       "stylesheets/octicons.ttf" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.ttf",
       "stylesheets/octicons.woff" -> "/META-INF/resources/webjars/octicons/3.1.0/octicons/octicons.woff",
+      // image
+      "images/blog.png" -> "/images/blog.png",
+      "images/cover.jpg" -> "/images/cover.jpg",
       // js jquery should be before bootstrap
       "javascripts/jquery-1.11.3.min.js" -> "/META-INF/resources/webjars/jquery/1.11.3/dist/jquery.min.js",
       "javascripts/bootstrap-3.3.6.min.js" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/js/bootstrap.min.js",

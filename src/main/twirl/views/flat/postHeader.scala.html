@@ -3,6 +3,12 @@
 <div class="container-fluid container-abitabove">
   <div class="row">
     <!--todo post.image  {{#if post.image}}background-image: url({{post.image}});{{/if}}-->
+    @defining(message("post_cover")) { isCovered =>
+    @if(isCovered.isEmpty) {
+      <div class="col-lg-12 centered text-center container-withcover no-cover">
+    } else {
+      <div class="col-lg-12 centered text-center container-withcover" style="background-image: url(@path(message("post_cover")));">
+    }}
     <div class="col-lg-12 centered text-center container-withcover no-cover">
       <h1>@post.title <small>@post.tagline</small></h1>
       <!--{{^if post.page}}-->
