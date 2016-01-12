@@ -4,7 +4,6 @@ import java.io.File
 
 import com.github.bootlog.models.Post
 import com.github.bootlog.util.ConfigUtil
-import com.google.common.io.ByteStreams
 import com.typesafe.config.{Config, ConfigFactory}
 import sbt.IO._
 import sbt.Keys._
@@ -52,7 +51,8 @@ object BootLogPlugin extends AutoPlugin {
     makeMD := process(
       Source.fromFile(bootlogConfigFile.value).getLines().mkString("\n"),
       generateDir.value,
-      assetResourceMapping.value
+      assetResourceMapping.value,
+      streams.value.log
     )
   )
 
@@ -61,8 +61,9 @@ object BootLogPlugin extends AutoPlugin {
 
   val charset = java.nio.charset.StandardCharsets.UTF_8
 
-  def process(config : String, generate_dir : File, assets : Seq[(String, String)]) : File = {
+  def process(config : String, generate_dir : File, assets : Seq[(String, String)], log: Logger) : File = {
     //println(config)
+    log.info("hello")
 
     val conf = ConfigFactory.parseString(config)
     ConfigUtil.conf = conf
@@ -97,7 +98,11 @@ object BootLogPlugin extends AutoPlugin {
     //  copy assets in webjar
     assets.foreach { case (filePath, url) =>
       try {
-        write(generate_dir / filePath, ByteStreams.toByteArray(getClass.getResource(url).openStream))
+        if(url.startsWith("/")) {
+          transfer(getClass.getResource(url).openStream(), generate_dir / filePath)
+        } else {
+          copyFile(new File(url), generate_dir / filePath)
+        }
       } catch {
         case e: Throwable =>
           println(s"catch Exception when copy $url")
