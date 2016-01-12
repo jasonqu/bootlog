@@ -1,3 +1,4 @@
+@(tagName: String)
 <div class="container-fluid container-abitabove">
   <div class="row">
     <!--todo blog.cover-->
@@ -15,8 +16,11 @@
       } else {
         <img src="@path(message("site_image"))" alt="@message("site.title") Logo" class="blog-logo"><br>
       }}
-      @message("site.title")
-      <!--todo tag ? <h1>{{tag.name}}</h1>-->
+      @if(tagName.isEmpty) {
+        @message("site.title")
+      } else {
+        @tagName
+      }
     </div>
   </div>
 </div>

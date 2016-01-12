@@ -1,13 +1,14 @@
 package com.github.bootlog
 
 import java.io.File
+
 import com.github.bootlog.models.Post
 import com.github.bootlog.util.ConfigUtil
 import com.google.common.io.ByteStreams
 import com.typesafe.config.{Config, ConfigFactory}
 import sbt.IO._
+import sbt.Keys._
 import sbt._
-import Keys._
 
 import scala.collection.mutable
 import scala.io.Source
@@ -43,9 +44,9 @@ object BootLogPlugin extends AutoPlugin {
       "images/cover.jpg" -> "/images/cover.jpg",
       // js jquery should be before bootstrap
       "javascripts/jquery-1.11.3.min.js" -> "/META-INF/resources/webjars/jquery/1.11.3/dist/jquery.min.js",
-      "javascripts/bootstrap-3.3.6.min.js" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/js/bootstrap.min.js",
+      "javascripts/bootstrap-3.3.6.min.js" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/js/bootstrap.min.js"
       // customize
-      "stylesheets/app.css" -> "/stylesheets/app.css"
+      //"stylesheets/app.css" -> "/stylesheets/app.css"
       //"stylesheets/style.css" -> "/stylesheets/style.css"
     ),
     makeMD := process(
@@ -70,49 +71,78 @@ object BootLogPlugin extends AutoPlugin {
     delete(generate_dir)
     generate_dir.mkdirs()
 
+    // parse posts
+    val posts: Array[Post] = Post.getPosts("_content/_posts")
+
+    val theme: String = conf.getString("theme")
+    var assetsAfterCustomize = assets
+    if(theme.equals("bootflat")) {
+      assetsAfterCustomize = ("stylesheets/app.css" -> "/stylesheets/app.css") +: assetsAfterCustomize
+      processAssets(generate_dir, assetsAfterCustomize)
+      processBootflatTheme(generate_dir, conf, posts)
+    } else {
+      if(!theme.equals("default")) {
+        println(s"unknown theme '$theme', change to default theme.")
+      }
+      assetsAfterCustomize = ("stylesheets/style.css" -> "/stylesheets/style.css") +: assetsAfterCustomize
+      processAssets(generate_dir, assetsAfterCustomize)
+      processDefaultTheme(generate_dir, conf, posts)
+    }
+
+
+    generate_dir
+  }
+
+  def processAssets(generate_dir: sbt.File, assets: Seq[(String, String)]): Unit = {
     //  copy assets in webjar
-    assets.foreach { pair =>
-      val (filePath, url) = pair
+    assets.foreach { case (filePath, url) =>
       try {
         write(generate_dir / filePath, ByteStreams.toByteArray(getClass.getResource(url).openStream))
       } catch {
-        case e : Throwable =>
+        case e: Throwable =>
           println(s"catch Exception when copy $url")
           e.printStackTrace
       }
     }
     ConfigUtil.assets = assets.map(_._1)
-
-    // parse posts
-    val posts: Array[Post] = Post.getPosts("_content/_posts")
-
-    if(true) {
-      processBootflatTheme(generate_dir, conf, posts)
-    } else {
-      processDefaultTheme(generate_dir, conf, posts)
-    }
-
-    generate_dir
+    println("copied assets : " + ConfigUtil.assets)
   }
 
-  def processBootflatTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
+  def processBootflatTheme(generate_dir: sbt.File, conf: Config, allPosts: Array[Post]): Unit = {
     val posts_per_page = if(conf.getInt("posts_per_page") < 10) 10 else conf.getInt("posts_per_page")
 
-    val postGroup: List[List[(String, Array[Post])]] = posts.groupBy(p => p.date.getYear * 100 + p.date.getMonthOfYear)
-      .toList.sortBy(_._1).map(p => (p._2(0).getYearMonth, p._2)).grouped(posts_per_page).toList
-    val totalPage = postGroup.size
+    val postPage : List[Array[Post]] = allPosts.grouped(posts_per_page).toList
+    val totalPage = postPage.size
 
-    posts.foreach { post =>
+    allPosts.foreach { post =>
       write(generate_dir / "posts" / post.name, views.html.flat.post(post).toString(), charset)
     }
 
-    if(totalPage == 1) {
-      write(generate_dir / "index.html", views.html.flat.archive(postGroup.head).toString(), charset)
-    } else {
-      postGroup.foreach { posts =>
-
+    // indexes
+    postPage.zipWithIndex.foreach { case (posts, index) =>
+      val postGroup: List[(String, Array[Post])] = posts.groupBy(p => p.date.getYear * 100 + p.date.getMonthOfYear)
+        .toList.sortBy(_._1).map(p => (p._2(0).getYearMonth, p._2))
+      if (index == 0) {
+        write(generate_dir / "index.html", views.html.flat.archive(postGroup)("", index, totalPage).toString(), charset)
+      } else {
+        write(generate_dir / s"index$index.html", views.html.flat.archive(postGroup)("", index, totalPage).toString(), charset)
       }
     }
+
+    // tags
+    val mm = new mutable.HashMap[String, mutable.Set[Post]] with mutable.MultiMap[String, Post]
+    for (post <- allPosts) {
+      post.tags.foreach { tag =>
+        mm.addBinding(tag, post)
+      }
+    }
+
+    mm.foreach { case (tag, posts) =>
+      val postGroup: List[(String, Array[Post])] = posts.toArray.groupBy(p => p.date.getYear * 100 + p.date.getMonthOfYear)
+        .toList.sortBy(_._1).map(p => (p._2(0).getYearMonth, p._2))
+      write(generate_dir / "tag" / s"$tag.html", views.html.flat.archive(postGroup)(tag, 0, 1).toString(), charset)
+    }
+
   }
 
   def processDefaultTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {

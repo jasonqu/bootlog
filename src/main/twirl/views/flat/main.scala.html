@@ -1,4 +1,4 @@
-@(pagetitle: String)(post: Option[Post])(content: Html)
+@(pagetitle: String)(post: Option[Post], tag: String)(content: Html)
 
 <!DOCTYPE html>
 <html>
@@ -14,15 +14,12 @@
     <title>@pagetitle</title>
 
     <!-- Le styles -->
-    <!--todo octicons-->
     @for(css <- CssList) {
     <link rel="stylesheet" media="all" href="@path(css)"> }
     <link rel="shortcut icon" type="image/png" href="@path("images/favicon.png")">
 
     <link href="atom.xml" type="application/atom+xml" rel="alternate" title="@message("site.description") ATOM Feed">
     <link href="rss.xml" type="application/rss+xml" rel="alternate" title="@message("site.description") RSS Feed">
-
-    <!-- TODO {{ghost_head}} -->
   </head>
   <body>
 
@@ -31,7 +28,7 @@
       @if(post.isDefined) {
         @postHeader(post.get)
       } else {
-        @header()
+        @header(tag)
       }
 
       <div class="container">
@@ -50,8 +47,6 @@
     <div id="footer">
       @footer()
     </div>
-    <!-- TODO {{ghost_foot}} -->
-
     <!-- {% include JB/analytics %} -->
     <!-- todo google prettify refactor -->
     

@@ -1,11 +1,16 @@
+@(currentPage: Int, totalPages: Int)
 <nav>
     <ul class="pager">
-        <li class="previous {{#unless prev}}disabled{{/unless}}">
-            <a href="{{page_url prev}}" {{#unless prev}}onclick="return false;"{{/unless}}><span aria-hidden="true">&larr;</span> Newer</a>
+        <li class="previous @if(currentPage == 0) {disabled} else {}">
+        @defining(if(currentPage > 1) "index" + (currentPage - 1) + ".html" else "index.html") { prev =>
+            <a href="@prev" @if(currentPage == 0) {onclick="return false;"} else {}><span aria-hidden="true">&larr;</span> Newer</a>
+        }
         </li>
-        <li class="page-number">Page {{page}} of {{pages}}</li>
-        <li class="next {{#unless next}}disabled{{/unless}}" {{#unless next}}onclick="return false;"{{/unless}}>
-        <a href="{{page_url next}}">Older <span aria-hidden="true">&rarr;</span></a>
+        <li class="page-number">Page @(currentPage + 1) of @totalPages</li>
+        <li class="next @if(currentPage == totalPages - 1) {disabled} else {}" @if(currentPage == totalPages - 1){onclick="return false;"} else {}>
+        @defining("index" + (currentPage + 1) + ".html") { next =>
+        <a href="@next">Older <span aria-hidden="true">&rarr;</span></a>
+        }
         </li>
     </ul>
 </nav>

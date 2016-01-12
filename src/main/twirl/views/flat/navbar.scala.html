@@ -12,20 +12,13 @@
       } else {
       <a class="navbar-brand pull-left" href="/"><img src="@path(message("site_image"))" class="navbar-logo" alt="logo"/>&nbsp;@message("site.title")</a>
       }}
-      <!--<a class="navbar-brand pull-left" href={{blog.url}}>{{#if blog.logo}}<img src="{{blog.logo}}" class="navbar-logo" alt="logo" />{{/if}} {{blog.title}}</a>-->
-      <!--todo blog-url blog-logo-->
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        @for(p <- ("archive.html", "Archive") :: ("categories.html", "Categories") :: Nil) {
-        <li><a href="@path(p._1)">@p._2</a></li>
-        }
-        <!--todo refine-->
-        <!--<li class="nav-{{slug}}{{#if current}} active{{/if}}">-->
-          <!--<a href="{{url absolute="true"}}">-->
-          <!--{{label}}-->
-          <!--</a>-->
-        <!--</li>-->
+        <!--todo for(p <- Configurable navbar).get) {-->
+        <!--<li><a href="p.getString("url")">p.getString("name")</a></li>-->
+        <!--}-->
+        <!--todo refine nav-{{slug}} and current active-->
       </ul>
       <!--todo rss blog.url-->
       <ul class="nav navbar-nav navbar-right">

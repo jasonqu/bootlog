@@ -1,6 +1,6 @@
-@(postGroup:List[(String, Array[Post])])
+@(postGroup:List[(String, Array[Post])])(tag: String, currentPage: Int, totalPages: Int)
 
-@main("Archive")(None) {
+@main("Archive")(None, tag) {
 <main>
 	<div class="timeline">
 		<dl>
@@ -26,8 +26,7 @@
 						</h3>
 						<h4 class="events-heading">
 							@for((tagname, tagIndex) <- post.tags.zipWithIndex) {
-							<!--todo tag url-->
-							<a href="">
+							<a href="@path("tag/" + tagname + ".html")">
 								<span class="label tag-@tagname @if(tagIndex % 2 == 1){label-primary}else{label-default}">
 									<i class="glyphicon glyphicon-tag"></i> @tagname </span></a>
 							&nbsp;
@@ -42,6 +41,6 @@
 			}
 		</dl>
 	</div>
-	<!--todo {{pagination}}-->
+	@pagination(currentPage, totalPages)
 </main>
 }
