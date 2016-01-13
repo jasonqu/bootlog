@@ -43,3 +43,4 @@ use `sbt run` to build the site and check it out in `src/site`
   * [x] default-wide
   * [x] post
   * [x] tags -> reuse archive
+* [ ] support drafts

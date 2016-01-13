@@ -1,11 +1,10 @@
-sbtPlugin := true
-
 lazy val bootlog = (project in file("."))
   .enablePlugins(SbtTwirl)
   .settings(
+    sbtPlugin := true,
     name := "bootlog",
     organization := "com.github.bootlog",
-    version := "0.1-SNAPSHOT",
+    version := "0.1.0",
     scalaVersion := "2.10.4",
     unmanagedResourceDirectories in Compile += baseDirectory.value / "src/main/asset",
     libraryDependencies ++= Seq(
@@ -18,6 +17,16 @@ lazy val bootlog = (project in file("."))
       "org.webjars.bower" % "jquery" % "1.11.3",
       "org.webjars.bower" % "octicons" % "3.1.0"
     )
+  )
+  .settings(
+    description := "An static blog generator powered by sbt, twirl, bootstrap, bootflat.",
+    startYear := Some(2015),
+    homepage := Some(url("https://github.com/jasonqu/bootlog")),
+    organizationHomepage := None,
+    licenses in GlobalScope += "Apache License 2.0" -> url("https://github.com/spray/sbt-revolver/raw/master/LICENSE"),
+    publishMavenStyle := false,
+    bintrayRepository := "sbt-plugins",
+    bintrayOrganization := None
   )
 
 TwirlKeys.templateImports ++= Seq(

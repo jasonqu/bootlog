@@ -62,9 +62,6 @@ object BootLogPlugin extends AutoPlugin {
   val charset = java.nio.charset.StandardCharsets.UTF_8
 
   def process(config : String, generate_dir : File, assets : Seq[(String, String)], log: Logger) : File = {
-    //println(config)
-    log.info("hello")
-
     val conf = ConfigFactory.parseString(config)
     ConfigUtil.conf = conf
 
@@ -79,38 +76,43 @@ object BootLogPlugin extends AutoPlugin {
     var assetsAfterCustomize = assets
     if(theme.equals("bootflat")) {
       assetsAfterCustomize = ("stylesheets/app.css" -> "/stylesheets/app.css") +: assetsAfterCustomize
-      processAssets(generate_dir, assetsAfterCustomize)
+      processAssets(generate_dir, assetsAfterCustomize, log)
       processBootflatTheme(generate_dir, conf, posts)
     } else {
-      if(!theme.equals("default")) {
-        println(s"unknown theme '$theme', change to default theme.")
-      }
+      if(!theme.equals("default"))
+        log.warn(s"unknown theme '$theme', change to default theme.")
       assetsAfterCustomize = ("stylesheets/style.css" -> "/stylesheets/style.css") +: assetsAfterCustomize
-      processAssets(generate_dir, assetsAfterCustomize)
+      processAssets(generate_dir, assetsAfterCustomize, log)
       processDefaultTheme(generate_dir, conf, posts)
     }
 
+    // common part
+    // atom
+    write(generate_dir / "atom.xml", views.xml.boot.pages.atom(posts).toString().trim(), charset)
+    // rss
+    write(generate_dir / "rss.xml", views.xml.boot.pages.rss(posts).toString().trim(), charset)
 
     generate_dir
   }
 
-  def processAssets(generate_dir: sbt.File, assets: Seq[(String, String)]): Unit = {
-    //  copy assets in webjar
+  def processAssets(generate_dir: sbt.File, assets: Seq[(String, String)], log: Logger): Unit = {
     assets.foreach { case (filePath, url) =>
       try {
         if(url.startsWith("/")) {
+          // copy assets in webjar
           transfer(getClass.getResource(url).openStream(), generate_dir / filePath)
         } else {
+          // copy assets in file
           copyFile(new File(url), generate_dir / filePath)
         }
       } catch {
         case e: Throwable =>
-          println(s"catch Exception when copy $url")
-          e.printStackTrace
+          log.error(s"catch Exception when copy $url")
+          e.printStackTrace()
       }
     }
     ConfigUtil.assets = assets.map(_._1)
-    println("copied assets : " + ConfigUtil.assets)
+    log.info("copied assets : " + ConfigUtil.assets)
   }
 
   def processBootflatTheme(generate_dir: sbt.File, conf: Config, allPosts: Array[Post]): Unit = {
@@ -151,7 +153,6 @@ object BootLogPlugin extends AutoPlugin {
   }
 
   def processDefaultTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
-    // generate pages
     // posts
     createDirectory(generate_dir / "post")
     posts.foreach { post =>
@@ -187,12 +188,6 @@ object BootLogPlugin extends AutoPlugin {
       }
     }
     write(generate_dir / "tags.html", views.html.boot.pages.tags(mm).toString(), charset)
-
-    // atom
-    write(generate_dir / "atom.xml", views.xml.boot.pages.atom(posts).toString().trim(), charset)
-
-    // rss
-    write(generate_dir / "rss.xml", views.xml.boot.pages.rss(posts).toString().trim(), charset)
 
     // sitemap
     val pages = "archive.html" :: "atom.xml" :: "categories.html" :: "index.html" :: "pages.html" :: "rss.xml" :: "sitemap.txt" :: "tags.html" :: Nil
