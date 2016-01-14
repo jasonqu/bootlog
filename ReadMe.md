@@ -18,19 +18,20 @@ use `sbt run` to build the site and check it out in `src/site`
 * [ ] blog demo
   * [x] simple demo
   * [x] simple demo change to boot3
-  * [ ] my blog
+  * [ ] bootflat blog
 * [ ] configurable theme
   * [x] configurable twirl template -> not acceptable, use configurable assets instead
   * [ ] http://bootflat.github.io/documentation.html background
   * [ ] theme example http://themes.jekyllbootstrap.com/preview/the-program/
   * [ ] configurable navbar
+  * [ ] configurable excerpt
 * [ ] try markdown-js instead of pegDown
   * [ ] https://github.com/evilstreak/markdown-js
   * [ ] https://github.com/chjj/marked
 * [ ] comment/analytics support
   * [ ] https://github.com/plusjade/jekyll-bootstrap/blob/master/_config.yml
 * [ ] chain generateDir and site's siteSourceDirectory
-* [ ] deploy to web
+* [x] deploy to web : bintray
 * [x] index.md
   * [x] if it exist, generate index.html
   * [x] else if `rootpath == ""`, use archive.html as index.html
@@ -44,3 +45,4 @@ use `sbt run` to build the site and check it out in `src/site`
   * [x] post
   * [x] tags -> reuse archive
 * [ ] support drafts
+* [ ] one image per blog
