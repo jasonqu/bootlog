@@ -9,28 +9,15 @@ use `sbt run` to build the site and check it out in `src/site`
 * [x] sbt plugin
   * [x] 1st version done
 * [x] sub domain eg. blog
-* [ ] todo google prettify refactor
-  * [ ] or prism
 * [x] webjar
   * [x] https://github.com/sbt/sbt-web/issues/95
   * [x] done:just use Source.fromURL
-  * [ ] optional: could use bower instead
-* [ ] blog demo
+  * [x] optional: could use bower instead
+* [x] blog demo
   * [x] simple demo
   * [x] simple demo change to boot3
-  * [ ] bootflat blog
-* [ ] configurable theme
-  * [x] configurable twirl template -> not acceptable, use configurable assets instead
-  * [ ] http://bootflat.github.io/documentation.html background
-  * [ ] theme example http://themes.jekyllbootstrap.com/preview/the-program/
-  * [ ] configurable navbar
-  * [ ] configurable excerpt
-* [ ] try markdown-js instead of pegDown
-  * [ ] https://github.com/evilstreak/markdown-js
-  * [ ] https://github.com/chjj/marked
-* [ ] comment/analytics support
-  * [ ] https://github.com/plusjade/jekyll-bootstrap/blob/master/_config.yml
-* [ ] chain generateDir and site's siteSourceDirectory
+  * [x] bootflat blog
+* [x] chain generateDir and site's siteSourceDirectory
 * [x] deploy to web : bintray
 * [x] index.md
   * [x] if it exist, generate index.html
@@ -44,5 +31,18 @@ use `sbt run` to build the site and check it out in `src/site`
   * [x] default-wide
   * [x] post
   * [x] tags -> reuse archive
-* [ ] support drafts
+* [x] support drafts
 * [ ] one image per blog
+* [ ] todo google prettify refactor
+  * [ ] or prism
+* [ ] configurable theme
+  * [x] configurable twirl template -> not acceptable, use configurable assets instead
+  * [x] http://bootflat.github.io/documentation.html background
+  * [x] theme example http://themes.jekyllbootstrap.com/preview/the-program/
+  * [ ] configurable navbar
+  * [x] configurable excerpt
+* [ ] try markdown-js instead of pegDown
+  * [ ] https://github.com/evilstreak/markdown-js
+  * [ ] https://github.com/chjj/marked
+* [ ] comment/analytics support
+  * [ ] https://github.com/plusjade/jekyll-bootstrap/blob/master/_config.yml

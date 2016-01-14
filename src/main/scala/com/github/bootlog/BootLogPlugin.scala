@@ -10,20 +10,21 @@ import sbt.Keys._
 import sbt._
 
 import scala.collection.mutable
-import scala.io.Source
 
 object BootLogPlugin extends AutoPlugin {
   object autoImport {
-    val makeMD = TaskKey[File]("make-md", "Generates a static markdown website for a project by using bootlog.")
-    val generateDir = SettingKey[File]("generate-dir", "the output dir for bootlog.")
-    val bootlogConfigFile = SettingKey[File]("bootlogConfigFile", "the user config that will be rendered in generated pages")
-    val assetResourceMapping = SettingKey[Seq[(String, String)]]("assetResourceMapping", "the user config that will be rendered in generated pages")
+    val makeMD = taskKey[File]("Generates a static markdown website for a project by using bootlog.")
+    val generateDir = settingKey[File]("the output dir for bootlog.")
+    val bootlogConfigFile = settingKey[File]("the user config that will be rendered in generated pages")
+    val assetResourceMapping = settingKey[Seq[(String, String)]]("the user config that will be rendered in generated pages")
+    val previewDrafts = settingKey[Boolean]("if this is true, then generated site will include the posts in _drafts")
   }
 
   import autoImport._
   lazy val baseSettings: Seq[Def.Setting[_]] = Seq(
     bootlogConfigFile := baseDirectory.value / "conf/application.conf",
     generateDir := baseDirectory.value / "src/site",
+    previewDrafts := false,
     assetResourceMapping := Seq(
       // css
       "stylesheets/bootstrap.3.3.6.min.css" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/css/bootstrap.min.css",
@@ -49,20 +50,20 @@ object BootLogPlugin extends AutoPlugin {
       //"stylesheets/style.css" -> "/stylesheets/style.css"
     ),
     makeMD := process(
-      Source.fromFile(bootlogConfigFile.value).getLines().mkString("\n"),
+      bootlogConfigFile.value,
       generateDir.value,
       assetResourceMapping.value,
+      previewDrafts.value,
       streams.value.log
     )
   )
 
-  override val projectSettings =
-    inConfig(Compile)(baseSettings)
+  override val projectSettings = baseSettings
 
   val charset = java.nio.charset.StandardCharsets.UTF_8
 
-  def process(config : String, generate_dir : File, assets : Seq[(String, String)], log: Logger) : File = {
-    val conf = ConfigFactory.parseString(config)
+  def process(configFile : File, generate_dir : File, assets : Seq[(String, String)], previewDrafts: Boolean, log: Logger) : File = {
+    val conf = ConfigFactory.parseString(read(configFile))
     ConfigUtil.conf = conf
 
     // io operations: delete site dir
@@ -70,7 +71,12 @@ object BootLogPlugin extends AutoPlugin {
     generate_dir.mkdirs()
 
     // parse posts
-    val posts: Array[Post] = Post.getPosts("_content/_posts")
+    val posts: Array[Post] =
+      if (previewDrafts) {
+        Post.getPosts("_content/_posts") ++ Post.getPosts("_content/_drafts")
+      } else {
+        Post.getPosts("_content/_posts")
+      }
 
     val theme: String = conf.getString("theme")
     var assetsAfterCustomize = assets

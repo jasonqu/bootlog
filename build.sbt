@@ -4,14 +4,15 @@ lazy val bootlog = (project in file("."))
     sbtPlugin := true,
     name := "bootlog",
     organization := "com.github.bootlog",
-    version := "0.1.0",
+    version := "0.1-SNAPSHOT",
     scalaVersion := "2.10.4",
     unmanagedResourceDirectories in Compile += baseDirectory.value / "src/main/asset",
     libraryDependencies ++= Seq(
       "joda-time" % "joda-time" % "2.4",
       "org.joda" % "joda-convert" % "1.2",
-      "org.pegdown" % "pegdown" % "1.4.2",
+      "org.pegdown" % "pegdown" % "1.6.0",
       "com.typesafe" % "config" % "1.2.1",
+      // assets
       "org.webjars.bower" % "bootstrap" % "3.3.6",
       "org.webjars.bower" % "Bootflat" % "2.0.4",
       "org.webjars.bower" % "jquery" % "1.11.3",
@@ -19,7 +20,7 @@ lazy val bootlog = (project in file("."))
     )
   )
   .settings(
-    description := "An static blog generator powered by sbt, twirl, bootstrap, bootflat.",
+    description := "An static blog generator powered by sbt, twirl, pegdown, bootstrap, bootflat.",
     startYear := Some(2015),
     homepage := Some(url("https://github.com/jasonqu/bootlog")),
     organizationHomepage := None,
