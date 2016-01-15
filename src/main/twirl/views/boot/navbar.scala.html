@@ -15,6 +15,9 @@
         :: ("pages.html", "Pages") :: ("tags.html", "Tags") :: Nil) {
         <li><a href="@path(p._1)">@p._2</a></li>
         }
+        @for(p <- extraNavBar) {
+        <li><a href="@p._1">@p._2</a></li>
+        }
       </ul>
     </div><!--/.nav-collapse -->
   </div>

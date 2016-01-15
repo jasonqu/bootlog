@@ -35,11 +35,11 @@ use `sbt run` to build the site and check it out in `src/site`
 * [ ] one image per blog
 * [ ] todo google prettify refactor
   * [ ] or prism
-* [ ] configurable theme
+* [x] configurable theme
   * [x] configurable twirl template -> not acceptable, use configurable assets instead
   * [x] http://bootflat.github.io/documentation.html background
-  * [x] theme example http://themes.jekyllbootstrap.com/preview/the-program/
-  * [ ] configurable navbar
+  * [x] theme example
+  * [x] configurable navbar
   * [x] configurable excerpt
 * [ ] try markdown-js instead of pegDown
   * [ ] https://github.com/evilstreak/markdown-js

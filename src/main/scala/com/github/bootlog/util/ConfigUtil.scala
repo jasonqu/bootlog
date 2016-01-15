@@ -23,6 +23,13 @@ object ConfigUtil {
     rootPath + relative
   }
 
+  lazy val extraNavBar: List[(String, String)] = {
+    import collection.JavaConversions._
+    conf.getConfigList("extra_nav_list").toList.map {entry =>
+      (entry.getString("url"), entry.getString("name"))
+    }
+  }
+
   var assets : Seq[String] = Seq[String]()
   lazy val CssList = assets.filter(_.endsWith(".css"))
   lazy val JsList = assets.filter(_.endsWith(".js"))

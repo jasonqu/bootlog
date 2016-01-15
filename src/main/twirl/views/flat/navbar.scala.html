@@ -15,9 +15,9 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <!--todo for(p <- Configurable navbar).get) {-->
-        <!--<li><a href="p.getString("url")">p.getString("name")</a></li>-->
-        <!--}-->
+        @for(p <- extraNavBar) {
+        <li><a href="@p._1">@p._2</a></li>
+        }
         <!--todo refine nav-{{slug}} and current active-->
       </ul>
       <!--todo rss blog.url-->
