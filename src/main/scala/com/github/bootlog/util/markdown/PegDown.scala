@@ -14,7 +14,7 @@ object PegDown {
    */
   def processMdFile(file: File) = {
     val pro = new PegDownProcessor()
-    val lines = scala.io.Source.fromFile(file).getLines().toList
+    val lines = scala.io.Source.fromFile(file, "utf8").getLines().toList
 
     val (metadata, md) = lines.drop(1).span { !_.startsWith("---") }
     

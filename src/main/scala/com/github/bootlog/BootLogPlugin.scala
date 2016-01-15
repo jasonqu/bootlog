@@ -63,7 +63,7 @@ object BootLogPlugin extends AutoPlugin {
   val charset = java.nio.charset.StandardCharsets.UTF_8
 
   def process(configFile : File, generate_dir : File, assets : Seq[(String, String)], previewDrafts: Boolean, log: Logger) : File = {
-    val conf = ConfigFactory.parseString(read(configFile))
+    val conf = ConfigFactory.parseString(read(configFile))//.withFallback(ConfigFactory.load()) TODO load config in reference
     ConfigUtil.conf = conf
 
     // io operations: delete site dir

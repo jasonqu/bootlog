@@ -33,6 +33,7 @@ use `sbt run` to build the site and check it out in `src/site`
   * [x] tags -> reuse archive
 * [x] support drafts
 * [ ] one image per blog
+* [ ] image in blog
 * [ ] todo google prettify refactor
   * [ ] or prism
 * [x] configurable theme
@@ -46,3 +47,4 @@ use `sbt run` to build the site and check it out in `src/site`
   * [ ] https://github.com/chjj/marked
 * [ ] comment/analytics support
   * [ ] https://github.com/plusjade/jekyll-bootstrap/blob/master/_config.yml
+* [ ] charset issue
