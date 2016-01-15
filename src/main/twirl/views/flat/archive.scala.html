@@ -1,4 +1,4 @@
-@(postGroup:List[(String, Array[Post])])(tag: String, currentPage: Int, totalPages: Int)
+@(postGroup:List[(String, Array[(Post, Int)])])(tag: String, currentPage: Int, totalPages: Int)
 
 @main("Archive")(None, tag) {
 <main>
@@ -6,7 +6,7 @@
 		<dl>
 			@for((date, posts) <- postGroup) {
 			<dt>@date</dt>
-			@for((post, index) <- posts.zipWithIndex) {
+			@for((post, index) <- posts) {
 			@defining(index % 2 == 1) { odd =>
 			<dd class="@if(odd){pos-left}else{pos-right} clearfix">
 				<div class="circ @if(odd){circ-odd}else{}">

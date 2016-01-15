@@ -132,13 +132,14 @@ object BootLogPlugin extends AutoPlugin {
     }
 
     // indexes
-    postPage.zipWithIndex.foreach { case (posts, index) =>
-      val postGroup: List[(String, Array[Post])] = posts.groupBy(p => p.date.getYear * 100 + p.date.getMonthOfYear)
-        .toList.sortBy(_._1).map(p => (p._2(0).getYearMonth, p._2))
-      if (index == 0) {
-        write(generate_dir / "index.html", views.html.flat.archive(postGroup)("", index, totalPage).toString(), charset)
+    postPage.zipWithIndex.foreach { case (posts, pageIndex) =>
+      val postGroup: List[(String, Array[(Post, Int)])] = posts.toArray.zipWithIndex
+        .groupBy(p => p._1.date.getYear * 100 + p._1.date.getMonthOfYear)
+        .toList.sortBy(- _._1).map(p => (p._2(0)._1.getYearMonth, p._2))
+      if (pageIndex == 0) {
+        write(generate_dir / "index.html", views.html.flat.archive(postGroup)("", pageIndex, totalPage).toString(), charset)
       } else {
-        write(generate_dir / s"index$index.html", views.html.flat.archive(postGroup)("", index, totalPage).toString(), charset)
+        write(generate_dir / s"index$pageIndex.html", views.html.flat.archive(postGroup)("", pageIndex, totalPage).toString(), charset)
       }
     }
 
@@ -151,11 +152,11 @@ object BootLogPlugin extends AutoPlugin {
     }
 
     mm.foreach { case (tag, posts) =>
-      val postGroup: List[(String, Array[Post])] = posts.toArray.groupBy(p => p.date.getYear * 100 + p.date.getMonthOfYear)
-        .toList.sortBy(_._1).map(p => (p._2(0).getYearMonth, p._2))
+      val postGroup: List[(String, Array[(Post, Int)])] = posts.toArray.sorted(Ordering.by((_: Post).date.getMillis).reverse).zipWithIndex.
+        groupBy(p => p._1.date.getYear * 100 + p._1.date.getMonthOfYear)
+        .toList.sortBy(- _._1).map(p => (p._2(0)._1.getYearMonth, p._2))
       write(generate_dir / "tag" / s"$tag.html", views.html.flat.archive(postGroup)(tag, 0, 1).toString(), charset)
     }
-
   }
 
   def processDefaultTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
