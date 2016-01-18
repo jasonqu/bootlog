@@ -59,7 +59,8 @@ object Post {
   }
 
   def getPosts(path: String) = {
-    val postFiles = recursiveListFiles(new File(path)).filterNot(_.isDirectory)
+    val postFiles = recursiveListFiles(new File(path))
+      .filterNot(_.isDirectory).filter(_.getName().endsWith(".md"))
     val posts = postFiles map getPost
     posts.sortWith((a, b) => a.date.isAfter(b.date))
   }

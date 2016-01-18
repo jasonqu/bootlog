@@ -1,0 +1,30 @@
+@(tags : List[(String, Int)])
+
+@main("Tags")(None, "Tags") {
+
+<main>
+  <div class="col-md-12">
+    @for((tag, count) <- tags) {
+    <a href='@path("tag/" + tag + ".html")'><span class="badge badge-primary">
+    <span class="badge badge-warning">@count</span>
+    @tag</span></a>
+    }
+    <!-- Badges
+    ================================================== -->
+    <h2 class="example-title">Badges</h2>
+    <span class="badge">Normal</span>&nbsp;
+    <div class="blank"></div>
+    <span class="badge badge-default">Default</span>&nbsp;
+    <div class="blank"></div>
+    <span class="badge badge-primary">Primary</span>&nbsp;
+    <div class="blank"></div>
+    <span class="badge badge-success">Success</span>&nbsp;
+    <div class="blank"></div>
+    <span class="badge badge-info">Info</span>&nbsp;
+    <div class="blank"></div>
+    <span class="badge badge-warning">Warning</span>&nbsp;
+    <div class="blank"></div>
+    <span class="badge badge-danger">Danger</span>&nbsp;
+  </div>
+</main>
+}
