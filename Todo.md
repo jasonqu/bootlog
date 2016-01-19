@@ -25,9 +25,16 @@
   * [x] default-wide
   * [x] post
   * [x] tags -> reuse archive
+  * [x] tags index
+    * [x] http://design.altervista.org/css-tags-how-to-style-post-tags/
+      * [ ] random color
+    * [x] http://www.cssflow.com/snippets/sliding-tags
+    * [x] http://cssglobe.com/pure-css3-post-tags/
+  * [ ] category
 * [x] support drafts
 * [ ] one image per blog
-* [ ] image in blog
+* [x] image in blog
+  * [x] have to be in the relative `img` dir
 * [x] todo google prettify refactor
   * [x] or prism
 * [x] configurable theme

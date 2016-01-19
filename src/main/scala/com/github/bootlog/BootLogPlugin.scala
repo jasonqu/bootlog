@@ -94,14 +94,14 @@ object BootLogPlugin extends AutoPlugin {
     val theme: String = conf.getString("theme")
     var assetsAfterCustomize = assets
     if(theme.equals("bootflat")) {
-      assetsAfterCustomize = ("stylesheets/app.css" -> "/stylesheets/app.css") +: assetsAfterCustomize
+      assetsAfterCustomize = assetsAfterCustomize :+ ("stylesheets/app.css" -> "/stylesheets/app.css")
       processAssets(generate_dir, assetsAfterCustomize, log)
       //processAssets(generate_dir / "post/image", blogImages.map(f => (f.getName, f)), log)
       processBootflatTheme(generate_dir, conf, posts)
     } else {
       if(!theme.equals("default"))
         log.warn(s"unknown theme '$theme', change to default theme.")
-      assetsAfterCustomize = ("stylesheets/style.css" -> "/stylesheets/style.css") +: assetsAfterCustomize
+      assetsAfterCustomize = assetsAfterCustomize :+ ("stylesheets/style.css" -> "/stylesheets/style.css")
       processAssets(generate_dir, assetsAfterCustomize, log)
       processDefaultTheme(generate_dir, conf, posts)
     }
@@ -174,8 +174,6 @@ object BootLogPlugin extends AutoPlugin {
 
     write(generate_dir / "tags.html", views.html.flat.tags(
       mm.map(ts => (ts._1, ts._2.size)).toList).toString(), charset)
-    write(generate_dir / "category.html", views.html.flat.category(
-      allPosts.groupBy(_.category).map(ts => (ts._1, ts._2.size)).toList).toString(), charset)
   }
 
   def processDefaultTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
