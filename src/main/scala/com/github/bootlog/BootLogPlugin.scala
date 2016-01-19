@@ -78,11 +78,25 @@ object BootLogPlugin extends AutoPlugin {
         Post.getPosts("_content/_posts")
       }
 
+    // images in blog have to be put in relative dir - "img" to the blog.
+    val blogImages: Array[File] =
+      if (previewDrafts) {
+        (Post.recursiveListFiles(new File("_content/_posts")) ++
+          Post.recursiveListFiles(new File("_content/_drafts")))
+        .filter(!_.getName.endsWith(".md"))
+      } else {
+        Post.recursiveListFiles(new File("_content/_posts"))
+          .filter(!_.getName.endsWith(".md"))
+      }
+    blogImages.filterNot(_.isDirectory)
+      .foreach(f => copyFile(f, generate_dir / "post/img" / f.getName))
+
     val theme: String = conf.getString("theme")
     var assetsAfterCustomize = assets
     if(theme.equals("bootflat")) {
       assetsAfterCustomize = ("stylesheets/app.css" -> "/stylesheets/app.css") +: assetsAfterCustomize
       processAssets(generate_dir, assetsAfterCustomize, log)
+      //processAssets(generate_dir / "post/image", blogImages.map(f => (f.getName, f)), log)
       processBootflatTheme(generate_dir, conf, posts)
     } else {
       if(!theme.equals("default"))
@@ -157,6 +171,11 @@ object BootLogPlugin extends AutoPlugin {
         .toList.sortBy(- _._1).map(p => (p._2(0)._1.getYearMonth, p._2))
       write(generate_dir / "tag" / s"$tag.html", views.html.flat.archive(postGroup)(tag, 0, 1).toString(), charset)
     }
+
+    write(generate_dir / "tags.html", views.html.flat.tags(
+      mm.map(ts => (ts._1, ts._2.size)).toList).toString(), charset)
+    write(generate_dir / "category.html", views.html.flat.category(
+      allPosts.groupBy(_.category).map(ts => (ts._1, ts._2.size)).toList).toString(), charset)
   }
 
   def processDefaultTheme(generate_dir: sbt.File, conf: Config, posts: Array[Post]): Unit = {
