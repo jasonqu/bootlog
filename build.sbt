@@ -4,7 +4,7 @@ lazy val bootlog = (project in file("."))
     sbtPlugin := true,
     name := "bootlog",
     organization := "com.github.bootlog",
-    version := "0.1.0",
+    version := "0.1.1",
     scalaVersion := "2.10.4",
     unmanagedResourceDirectories in Compile += baseDirectory.value / "src/main/asset",
     libraryDependencies ++= Seq(
@@ -15,7 +15,7 @@ lazy val bootlog = (project in file("."))
       // assets
       "org.webjars.bower" % "bootstrap" % "3.3.6",
       "org.webjars.bower" % "Bootflat" % "2.0.4",
-      "org.webjars.bower" % "jquery" % "1.11.3",
+      // "org.webjars.bower" % "jquery" % "1.11.3", evicted by bootstrap's dependency : jquery 1.12.0
       "org.webjars.bower" % "octicons" % "3.1.0"
     )
   )

@@ -43,7 +43,7 @@ object BootLogPlugin extends AutoPlugin {
       "images/blog.png" -> "/images/blog.png",
       "images/cover.jpg" -> "/images/cover.jpg",
       // js jquery should be before bootstrap
-      "javascripts/jquery-1.11.3.min.js" -> "/META-INF/resources/webjars/jquery/1.11.3/dist/jquery.min.js",
+      "javascripts/jquery-1.12.0.min.js" -> "/META-INF/resources/webjars/jquery/1.12.0/dist/jquery.min.js",
       "javascripts/bootstrap-3.3.6.min.js" -> "/META-INF/resources/webjars/bootstrap/3.3.6/dist/js/bootstrap.min.js"
       // customize
       //"stylesheets/app.css" -> "/stylesheets/app.css"
@@ -82,21 +82,20 @@ object BootLogPlugin extends AutoPlugin {
     val blogImages: Array[File] =
       if (previewDrafts) {
         (Post.recursiveListFiles(new File("_content/_posts")) ++
-          Post.recursiveListFiles(new File("_content/_drafts")))
+          Post.recursiveListFiles(new File("_content/_draft")))
         .filter(!_.getName.endsWith(".md"))
       } else {
         Post.recursiveListFiles(new File("_content/_posts"))
           .filter(!_.getName.endsWith(".md"))
       }
     blogImages.filterNot(_.isDirectory)
-      .foreach(f => copyFile(f, generate_dir / "post/img" / f.getName))
+      .foreach(f => copyFile(f, generate_dir / "posts/img" / f.getName))
 
     val theme: String = conf.getString("theme")
     var assetsAfterCustomize = assets
     if(theme.equals("bootflat")) {
       assetsAfterCustomize = assetsAfterCustomize :+ ("stylesheets/app.css" -> "/stylesheets/app.css")
       processAssets(generate_dir, assetsAfterCustomize, log)
-      //processAssets(generate_dir / "post/image", blogImages.map(f => (f.getName, f)), log)
       processBootflatTheme(generate_dir, conf, posts)
     } else {
       if(!theme.equals("default"))

@@ -87,7 +87,7 @@ bootlog提供的sbt setting如下，可以通过修改`build.sbt`来修改这些
 
 #### `previewDrafts`
 
-如果需要预览`_content/_drafts`目录下的markdown文件，则需要修改该配置：`previewDrafts := true`
+如果需要预览`_content/_draft`目录下的markdown文件，则需要修改该配置：`previewDrafts := true`
 
 ### conf 文件介绍
 
