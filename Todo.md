@@ -35,6 +35,7 @@
 * [ ] one image per blog
 * [x] image in blog
   * [x] have to be in the relative `img` dir
+  * [x] responsive image http://stackoverflow.com/questions/12044801/responsive-web-design-and-resizing-images
 * [x] todo google prettify refactor
   * [x] or prism
 * [x] configurable theme

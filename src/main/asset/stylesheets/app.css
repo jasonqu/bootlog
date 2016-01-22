@@ -104,3 +104,9 @@ footer {
 
 .no-cover {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKklEQVQImWPIzMz87+vri4IZfH19/6NLMMAYyBIMyCpgEgzo5mVmZv4HAPmEMRtoR8GQAAAAAElFTkSuQmCC) repeat;
+}
+
+img, embed, object, video {
+    max-width:100%;
+    height:auto;
+}
