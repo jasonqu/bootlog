@@ -9,7 +9,7 @@ bootlog提供了两个示例，分别展示了[bootflat的主题](http://jasonqu
 
 在你的`project/plugins.sbt`中添加：
 
-    addSbtPlugin("com.github.bootlog" % "bootlog" % "0.1.0")
+    addSbtPlugin("com.github.bootlog" % "bootlog" % "0.1.1")
     
     addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "0.8.1")
     
