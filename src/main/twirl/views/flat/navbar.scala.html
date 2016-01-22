@@ -16,7 +16,7 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         @for(p <- Seq("tags.html" -> "Tags")) {
-        <li><a href="@p._1">@p._2</a></li>
+        <li><a href="@path(p._1)">@p._2</a></li>
         }
         @for(p <- extraNavBar) {
         <li><a href="@p._1">@p._2</a></li>
