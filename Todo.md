@@ -48,4 +48,6 @@
   * [ ] https://github.com/chjj/marked
 * [ ] comment/analytics support
   * [ ] https://github.com/plusjade/jekyll-bootstrap/blob/master/_config.yml
-* [ ] charset issue
+* [x] charset issue : only support utf8 and system's default one
+* [ ] support incremental makeMD
+  * [ ] support [Triggered Execution](http://www.scala-sbt.org/0.13/docs/Triggered-Execution.html)

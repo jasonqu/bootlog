@@ -9,7 +9,7 @@ bootlog提供了两个示例，分别展示了[bootflat的主题](http://jasonqu
 
 在你的`project/plugins.sbt`中添加：
 
-    addSbtPlugin("com.github.bootlog" % "bootlog" % "0.1.0")
+    addSbtPlugin("com.github.bootlog" % "bootlog" % "0.1.1")
     
     addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "0.8.1")
     
@@ -35,7 +35,7 @@ bootlog提供了两个示例，分别展示了[bootflat的主题](http://jasonqu
     
     git.remoteRepo := "https://github.com/{my github account}/{my blog repo}.git"
 
-在`conf\application.conf`中写入自己的参数，在`_content\_posts`中编辑自己的文章。
+在`conf/application.conf`中写入自己的参数，在`_content/_posts`中编辑自己的文章。
 完成后进入`sbt`，运行`makeMD`生成网站，使用`previewSite`预览自己的网站，最后使用`ghpagesPushSite`将网站发布到github。
 
 ## 配置参数
@@ -51,7 +51,7 @@ bootlog提供的sbt setting如下，可以通过修改`build.sbt`来修改这些
 
 #### `bootlogConfigFile`
 
-`bootlog`读取的配置文件，默认是`conf\application.conf`。
+`bootlog`读取的配置文件，默认是`conf/application.conf`。
 
 要设置为根目录下的`blog.conf`，可以这样修改：`bootlogConfigFile := baseDirectory.value / "blog.conf"`
 
@@ -72,7 +72,6 @@ bootlog提供的sbt setting如下，可以通过修改`build.sbt`来修改这些
 
       "org.webjars.bower" % "bootstrap" % "3.3.6",
       "org.webjars.bower" % "Bootflat" % "2.0.4",
-      "org.webjars.bower" % "jquery" % "1.11.3",
       "org.webjars.bower" % "octicons" % "3.1.0"
 
 要使用打包在webjar中的资源，可以像下面这样：
